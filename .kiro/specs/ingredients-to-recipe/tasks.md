@@ -1,0 +1,422 @@
+# Implementation Plan
+
+- [-] 1. Set up project structure and development environment
+  - Create backend directory with FastAPI project structure (app, models, routes, services)
+  - Create frontend directory with React project using Create React App or Vite
+  - Set up Docker Compose configuration for PostgreSQL, backend, and frontend services
+  - Create environment variable templates (.env.example) including GROQ_API_KEY for both frontend and backend
+  - Initialize Git repository with appropriate .gitignore files
+  - _Requirements: All requirements depend on proper project setup_
+
+- [ ] 2. Configure database and implement core data models
+  - [ ] 2.1 Set up PostgreSQL database connection and SQLAlchemy configuration
+    - Configure SQLAlchemy engine with connection pooling
+    - Create database session management utilities
+    - Set up Alembic for database migrations
+    - _Requirements: 1.1, 2.1, 3.1_
+  - [ ] 2.2 Implement database schema and models
+    - Create SQLAlchemy models for users, ingredients, recipes (with cache_key and source fields), recipe_ingredients, dietary_tags, recipe_dietary_tags, user_favorites, shopping_list_items, and recipe_ratings tables
+    - Define relationships between models
+    - Add indexes for performance optimization including cache_key index
+    - _Requirements: 1.1, 2.1, 3.1, 6.1, 7.1, 10.1_
+  - [ ] 2.3 Create initial database migration
+    - Generate Alembic migration script from models
+    - Test migration up and down
+    - _Requirements: 1.1, 2.1, 3.1_
+  - [ ] 2.4 Create database seed script with sample data
+    - Write script to populate ingredients table with common ingredients (chicken, rice, tomato, etc.)
+    - Add dietary tags (vegetarian, vegan, gluten-free)
+    - Note: Recipes will be generated dynamically via Groq API, not seeded
+    - _Requirements: 1.2, 2.1, 8.1_
+
+- [ ] 3. Implement authentication system
+  - [ ] 3.1 Create user authentication service
+    - Implement password hashing using bcrypt
+    - Create JWT token generation and validation functions
+    - Implement user registration logic
+    - Implement user login logic
+    - _Requirements: 6.1, 6.2_
+  - [ ] 3.2 Create authentication API endpoints
+    - Implement POST /api/auth/register endpoint
+    - Implement POST /api/auth/login endpoint
+    - Create authentication middleware for protected routes
+    - Configure httpOnly cookie handling
+    - _Requirements: 6.1, 6.2_
+  - [ ] 3.3 Implement CORS and security configuration
+    - Configure CORS to allow frontend origin
+    - Set up rate limiting for authentication endpoints
+    - Configure security headers
+    - _Requirements: 6.1, 6.2_
+  - [ ] 3.4 Write unit tests for authentication service
+    - Test password hashing and verification
+    - Test JWT token generation and validation
+    - Test registration with duplicate email
+    - Test login with invalid credentials
+    - _Requirements: 6.1, 6.2_
+
+- [ ] 4. Implement ingredient management features
+  - [ ] 4.1 Create ingredient service and API endpoints
+    - Implement GET /api/ingredients endpoint to retrieve all ingredients
+    - Implement GET /api/ingredients/autocomplete endpoint with query parameter
+    - Create ingredient normalization utility function
+    - Implement synonym matching logic
+    - _Requirements: 1.2, 1.3_
+  - [ ] 4.2 Implement autocomplete search functionality
+    - Create database query with ILIKE pattern matching
+    - Implement debouncing logic in service layer
+    - Add limit parameter to control result count
+    - _Requirements: 1.2_
+  - [ ] 4.3 Write unit tests for ingredient service
+    - Test autocomplete with various query strings
+    - Test ingredient normalization
+    - Test synonym matching
+    - _Requirements: 1.2_
+
+- [ ] 5. Integrate Groq API for recipe generation
+  - [ ] 5.1 Set up Groq API client and configuration
+    - Install groq Python package
+    - Create Groq client service with API key from environment variable
+    - Implement rate limiting to stay within free tier limits (30 req/min)
+    - Add error handling for API failures
+    - _Requirements: 2.1, 2.4_
+  - [ ] 5.2 Implement recipe generation prompt builder
+    - Create function to build structured prompt from ingredients and filters
+    - Include dietary preferences in prompt (vegetarian, vegan, gluten-free)
+    - Include cooking time constraints in prompt
+    - Format prompt to request JSON response with specific structure
+    - _Requirements: 2.1, 5.1, 5.2_
+  - [ ] 5.3 Create recipe generation service
+    - Implement function to call Groq API with llama-3.3-70b-versatile model
+    - Parse JSON response from AI into recipe objects
+    - Handle malformed AI responses gracefully
+    - Implement retry logic for transient failures
+    - _Requirements: 2.1, 2.4_
+  - [ ] 5.4 Implement recipe caching system
+    - Create cache key generation from sorted ingredients and filters
+    - Implement cache lookup before calling Groq API
+    - Store generated recipes in database with cache_key
+    - Set cache expiration to 7 days
+    - _Requirements: 2.4_
+  - [ ] 5.5 Write unit tests for Groq integration
+    - Test prompt building with various ingredient combinations
+    - Test JSON parsing from AI responses
+    - Test cache key generation
+    - Test error handling for API failures
+    - Mock Groq API calls in tests
+    - _Requirements: 2.1, 2.4_
+
+- [ ] 6. Implement recipe search and retrieval endpoints
+  - [ ] 6.1 Create recipe search API endpoint
+    - Implement POST /api/recipes/search endpoint
+    - Check cache first for existing recipes
+    - Call Groq API to generate recipes if cache miss
+    - Store generated recipes in database
+    - Return recipes with match percentage and availability flags
+    - Implement pagination (20 recipes per page)
+    - _Requirements: 2.1, 2.2, 2.4, 2.5, 5.3_
+  - [ ] 6.2 Implement recipe detail endpoint
+    - Create GET /api/recipes/{recipe_id} endpoint
+    - Include all recipe details (ingredients, instructions, metadata)
+    - Include average rating and total ratings count
+    - Include nutritional information if available
+    - Increment view_count when recipe is accessed
+    - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
+  - [ ] 6.3 Implement popular recipes endpoint
+    - Create GET /api/recipes/popular endpoint
+    - Query recipes sorted by view_count
+    - Accept limit query parameter (default 6)
+    - Implement caching with 5-minute TTL
+    - _Requirements: 8.1, 8.2, 8.3, 8.4_
+  - [ ] 6.4 Write integration tests for recipe endpoints
+    - Test recipe search with cache hit and miss scenarios
+    - Test recipe detail retrieval
+    - Test popular recipes endpoint
+    - Test pagination
+    - _Requirements: 2.1, 2.2, 3.1, 8.1_
+
+- [ ] 7. Implement user favorites and shopping list features
+  - [ ] 7.1 Create favorites API endpoints
+    - Implement POST /api/users/favorites/{recipe_id} endpoint (requires authentication)
+    - Implement GET /api/users/favorites endpoint (requires authentication)
+    - Implement DELETE /api/users/favorites/{recipe_id} endpoint (requires authentication)
+    - _Requirements: 6.3, 6.4, 6.5_
+  - [ ] 7.2 Create shopping list API endpoints
+    - Implement POST /api/users/shopping-list endpoint to add ingredients (requires authentication)
+    - Implement GET /api/users/shopping-list endpoint (requires authentication)
+    - Implement DELETE /api/users/shopping-list/{item_id} endpoint (requires authentication)
+    - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5_
+  - [ ] 7.3 Write integration tests for favorites and shopping list
+    - Test adding and removing favorites
+    - Test retrieving user favorites
+    - Test adding ingredients to shopping list
+    - Test removing items from shopping list
+    - _Requirements: 6.3, 6.4, 7.1, 7.2, 7.3, 7.4_
+
+- [ ] 8. Implement recipe rating system
+  - [ ] 8.1 Create rating service and API endpoints
+    - Implement POST /api/recipes/{recipe_id}/ratings endpoint (requires authentication)
+    - Implement GET /api/recipes/{recipe_id}/ratings endpoint
+    - Create function to calculate average rating
+    - Implement logic to update existing rating if user has already rated
+    - _Requirements: 10.1, 10.2, 10.3, 10.4, 10.5_
+  - [ ] 8.2 Update recipe endpoints to include rating information
+    - Modify recipe search response to include average_rating and total_ratings
+    - Modify recipe detail response to include user's rating if authenticated
+    - _Requirements: 10.3, 10.4_
+  - [ ] 8.3 Write unit tests for rating service
+    - Test rating creation
+    - Test rating update
+    - Test average rating calculation
+    - Test rating validation (1-5 range)
+    - _Requirements: 10.1, 10.2, 10.5_
+
+- [ ] 9. Implement error handling and validation
+  - [ ] 9.1 Create custom exception handlers
+    - Implement global exception handler for ValueError
+    - Implement global exception handler for SQLAlchemyError
+    - Implement handler for authentication errors
+    - Create standardized error response format
+    - _Requirements: 9.1, 9.2, 9.3, 9.4_
+  - [ ] 9.2 Add input validation using Pydantic models
+    - Create Pydantic models for all request bodies
+    - Add validation for email format in user registration
+    - Add validation for rating range (1-5)
+    - Add validation for required fields
+    - _Requirements: 9.2, 9.4_
+  - [ ] 9.3 Implement logging for debugging
+    - Configure logging with appropriate levels
+    - Add error logging for all exception handlers
+    - Log authentication attempts
+    - _Requirements: 9.5_
+
+- [ ] 10. Set up React frontend project structure
+  - Create React application with TypeScript
+  - Set up React Router for navigation
+  - Create folder structure (components, pages, services, hooks, types, utils)
+  - Configure Axios for API calls with base URL
+  - Set up CSS Modules or styled-components for styling
+  - _Requirements: All frontend requirements_
+
+- [ ] 11. Implement frontend authentication
+  - [ ] 11.1 Create authentication context and hooks
+    - Create AuthContext for managing user state
+    - Implement useAuth hook for accessing authentication state
+    - Create login and register functions
+    - Implement token storage and retrieval
+    - _Requirements: 6.1, 6.2_
+  - [ ] 11.2 Create authentication UI components
+    - Create LoginForm component with email and password inputs
+    - Create RegisterForm component with validation
+    - Create ProtectedRoute component for authenticated routes
+    - Add error display for authentication failures
+    - _Requirements: 6.1, 6.2, 9.1, 9.2_
+  - [ ] 11.3 Write unit tests for authentication components
+    - Test LoginForm submission
+    - Test RegisterForm validation
+    - Test AuthContext state management
+    - _Requirements: 6.1, 6.2_
+
+- [ ] 12. Implement ingredient input interface
+  - [ ] 12.1 Create IngredientInput component
+    - Create text input field with onChange handler
+    - Implement debounced autocomplete API call (300ms delay)
+    - Display autocomplete suggestions dropdown
+    - Handle ingredient selection from suggestions
+    - Implement minimum 2 characters before triggering autocomplete
+    - _Requirements: 1.1, 1.2, 1.3_
+  - [ ] 12.2 Create SelectedIngredientsList component
+    - Display list of selected ingredients with visual tags
+    - Implement remove button for each ingredient
+    - Add "Add More Ingredients" functionality
+    - _Requirements: 1.3, 1.4, 1.5_
+  - [ ] 12.3 Create HomePage component
+    - Integrate IngredientInput component
+    - Add "Get Recipes" button
+    - Handle form submission to navigate to recipe results
+    - Display clear heading and instructions
+    - _Requirements: 1.1, 1.3, 1.4_
+  - [ ] 12.4 Write unit tests for ingredient input components
+    - Test autocomplete triggering
+    - Test ingredient selection
+    - Test ingredient removal
+    - Test debouncing behavior
+    - _Requirements: 1.2, 1.3, 1.5_
+
+- [ ] 13. Implement recipe search results interface
+  - [ ] 13.1 Create RecipeCard component
+    - Display recipe name, image, cooking time, and description
+    - Show match percentage indicator
+    - Add click handler to navigate to recipe detail
+    - Implement responsive card layout
+    - _Requirements: 2.2, 2.3_
+  - [ ] 13.2 Create FilterPanel component
+    - Create cooking time filter with radio buttons or dropdown
+    - Create dietary preference checkboxes (vegetarian, vegan, gluten-free)
+    - Implement filter change handlers
+    - Display recipe count matching current filters
+    - Add "Clear Filters" button
+    - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5_
+  - [ ] 13.3 Create RecipeResults page component
+    - Fetch recipes from API based on ingredients and filters
+    - Display loading state during API call
+    - Display RecipeCard components in grid layout
+    - Integrate FilterPanel component
+    - Display "no recipes found" message when appropriate
+    - Implement pagination controls
+    - _Requirements: 2.1, 2.2, 2.3, 2.4, 5.3, 9.3_
+  - [ ] 13.4 Write integration tests for recipe search
+    - Test recipe search with ingredients
+    - Test filter application
+    - Test no results scenario
+    - Test pagination
+    - _Requirements: 2.1, 2.2, 2.3, 5.3_
+
+- [ ] 14. Implement recipe detail page
+  - [ ] 14.1 Create RecipeDetail page component
+    - Fetch recipe details from API using recipe ID
+    - Display recipe name and image
+    - Create IngredientList component showing available vs missing ingredients
+    - Create InstructionSteps component with numbered steps
+    - Display cooking time, difficulty, and serving size
+    - Display nutritional information if available
+    - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
+  - [ ] 14.2 Create RatingComponent
+    - Display average rating with star visualization
+    - Display total number of ratings
+    - Allow authenticated users to submit ratings (1-5 stars)
+    - Show user's existing rating if available
+    - Update rating on submission
+    - _Requirements: 10.1, 10.2, 10.3, 10.4, 10.5_
+  - [ ] 14.3 Create ShoppingListButton component
+    - Display "Add to Shopping List" button for missing ingredients
+    - Handle click to add missing ingredients to shopping list
+    - Show success feedback after adding
+    - Require authentication for this feature
+    - _Requirements: 7.1, 7.2_
+  - [ ] 14.4 Add favorite button to recipe detail
+    - Display heart icon to favorite/unfavorite recipe
+    - Toggle favorite status on click
+    - Require authentication for this feature
+    - Show visual feedback for favorite status
+    - _Requirements: 6.3, 6.4_
+  - [ ] 14.5 Write integration tests for recipe detail page
+    - Test recipe detail loading
+    - Test rating submission
+    - Test adding to shopping list
+    - Test favoriting recipe
+    - _Requirements: 3.1, 6.3, 7.1, 10.1_
+
+- [ ] 15. Implement user profile features
+  - [ ] 15.1 Create UserProfile page component
+    - Display user email and account information
+    - Create navigation tabs for Favorites and Shopping List
+    - _Requirements: 6.4, 7.3_
+  - [ ] 15.2 Create FavoriteRecipes component
+    - Fetch user's favorite recipes from API
+    - Display recipes in grid layout using RecipeCard component
+    - Handle navigation to recipe detail
+    - Display empty state if no favorites
+    - _Requirements: 6.4, 6.5_
+  - [ ] 15.3 Create ShoppingList component
+    - Fetch shopping list items from API
+    - Display items with ingredient name, quantity, and unit
+    - Add remove button for each item
+    - Display empty state if no items
+    - _Requirements: 7.3, 7.4, 7.5_
+  - [ ] 15.4 Write integration tests for user profile
+    - Test favorites display
+    - Test shopping list display
+    - Test removing items from shopping list
+    - _Requirements: 6.4, 7.3, 7.4_
+
+- [ ] 16. Implement popular recipes section
+  - [ ] 16.1 Create PopularRecipes component
+    - Fetch popular recipes from API
+    - Display recipes in horizontal scrollable layout or grid
+    - Show recipe name, image, and cooking time
+    - Handle click to navigate to recipe detail
+    - Display on homepage
+    - _Requirements: 8.1, 8.2, 8.3_
+  - [ ] 16.2 Integrate PopularRecipes into HomePage
+    - Add PopularRecipes component below ingredient input section
+    - Ensure proper spacing and layout
+    - _Requirements: 8.1, 8.2_
+
+- [ ] 17. Implement responsive design and mobile optimization
+  - [ ] 17.1 Create responsive layout with CSS
+    - Define breakpoints for mobile (320-767px), tablet (768-1023px), and desktop (1024px+)
+    - Implement mobile-first CSS approach
+    - Use CSS Grid and Flexbox for flexible layouts
+    - _Requirements: 4.1, 4.2_
+  - [ ] 17.2 Optimize components for mobile devices
+    - Ensure touch-friendly buttons (minimum 44px × 44px)
+    - Create collapsible filter panel for mobile
+    - Implement responsive navigation
+    - Optimize recipe card layout for small screens
+    - Ensure recipe instructions are readable on mobile
+    - _Requirements: 4.1, 4.2, 4.3_
+  - [ ] 17.3 Test responsive behavior
+    - Test on mobile viewport (320px width)
+    - Test on tablet viewport (768px width)
+    - Test on desktop viewport (1024px+ width)
+    - Verify touch interactions work properly
+    - _Requirements: 4.1, 4.2, 4.3, 4.4_
+
+- [ ] 18. Implement error handling and user feedback
+  - [ ] 18.1 Create error display components
+    - Create ErrorMessage component for inline errors
+    - Create ErrorBoundary component for catching React errors
+    - Create Toast/Notification component for success messages
+    - _Requirements: 9.1, 9.2, 9.3, 9.4_
+  - [ ] 18.2 Add error handling to API calls
+    - Wrap API calls in try-catch blocks
+    - Display user-friendly error messages
+    - Handle network errors gracefully
+    - Show loading states during API calls
+    - _Requirements: 9.1, 9.3, 9.4_
+  - [ ] 18.3 Implement form validation
+    - Validate ingredient input (at least one ingredient required)
+    - Validate email format in authentication forms
+    - Display validation errors inline
+    - _Requirements: 9.2, 9.4_
+
+- [ ] 19. Implement API client service
+  - Create centralized API client using Axios
+  - Configure base URL from environment variable
+  - Add request interceptor for authentication token
+  - Add response interceptor for error handling
+  - Create typed API methods for all endpoints
+  - _Requirements: All API-dependent requirements_
+
+- [ ] 20. Add loading states and performance optimization
+  - [ ] 20.1 Implement loading indicators
+    - Add loading spinner for recipe search
+    - Add skeleton screens for recipe cards
+    - Add loading state for recipe detail page
+    - _Requirements: 2.4_
+  - [ ] 20.2 Optimize frontend performance
+    - Implement code splitting by route using React.lazy
+    - Add lazy loading for recipe images
+    - Memoize expensive computations using React.memo and useMemo
+    - Implement virtual scrolling for long recipe lists if needed
+    - _Requirements: 2.4, 4.4_
+
+- [ ] 21. Final integration and testing
+  - [ ] 21.1 Test complete user flows
+    - Test flow: ingredient input → recipe search → recipe detail → add to favorites
+    - Test flow: recipe detail → add missing ingredients to shopping list
+    - Test flow: user registration → login → rate recipe
+    - Test filter combinations with recipe search
+    - _Requirements: All requirements_
+  - [ ] 21.2 Verify all requirements are met
+    - Review requirements document and verify each acceptance criterion
+    - Test error scenarios and edge cases
+    - Verify mobile responsiveness on actual devices
+    - Test authentication flow completely
+    - _Requirements: All requirements_
+  - [ ] 21.3 Update documentation
+    - Create README with setup instructions
+    - Document API endpoints
+    - Document environment variables
+    - Add code comments where necessary
+    - _Requirements: All requirements_
