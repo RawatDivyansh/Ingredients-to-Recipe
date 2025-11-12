@@ -12,6 +12,7 @@ __pycache__/
 env/
 venv/
 ENV/
+ingredient_venv/
 *.egg-info/
 dist/
 build/
@@ -46,3 +47,15 @@ postgres_data/
 .coverage
 htmlcov/
 .pytest_cache/
+backend/test_db_connection.py
+backend/test.db
+
+# Temporary documentation files
+backend/DATABASE_SETUP.md
+backend/MIGRATION_SUCCESS.md
+backend/AUTH_IMPLEMENTATION.md
+backend/alembic
+*.ini
+
+# venv
+./ingredient_venv
