@@ -5,7 +5,7 @@ from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from starlette.middleware.base import BaseHTTPMiddleware
 import os
-from app.routes import auth_routes, ingredient_routes, recipe_routes
+from app.routes import auth_routes, ingredient_routes, recipe_routes, user_routes
 
 # Initialize rate limiter
 limiter = Limiter(key_func=get_remote_address)
@@ -45,6 +45,7 @@ app.add_middleware(SecurityHeadersMiddleware)
 app.include_router(auth_routes.router)
 app.include_router(ingredient_routes.router)
 app.include_router(recipe_routes.router)
+app.include_router(user_routes.router)
 
 @app.get("/")
 async def root():

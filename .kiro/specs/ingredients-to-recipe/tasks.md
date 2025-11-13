@@ -134,18 +134,18 @@
     - Test pagination
     - _Requirements: 2.1, 2.2, 3.1, 8.1_
 
-- [ ] 7. Implement user favorites and shopping list features
-  - [ ] 7.1 Create favorites API endpoints
+- [x] 7. Implement user favorites and shopping list features
+  - [x] 7.1 Create favorites API endpoints
     - Implement POST /api/users/favorites/{recipe_id} endpoint (requires authentication)
     - Implement GET /api/users/favorites endpoint (requires authentication)
     - Implement DELETE /api/users/favorites/{recipe_id} endpoint (requires authentication)
     - _Requirements: 6.3, 6.4, 6.5_
-  - [ ] 7.2 Create shopping list API endpoints
+  - [x] 7.2 Create shopping list API endpoints
     - Implement POST /api/users/shopping-list endpoint to add ingredients (requires authentication)
     - Implement GET /api/users/shopping-list endpoint (requires authentication)
     - Implement DELETE /api/users/shopping-list/{item_id} endpoint (requires authentication)
     - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5_
-  - [ ] 7.3 Write integration tests for favorites and shopping list
+  - [x] 7.3 Write integration tests for favorites and shopping list
     - Test adding and removing favorites
     - Test retrieving user favorites
     - Test adding ingredients to shopping list
