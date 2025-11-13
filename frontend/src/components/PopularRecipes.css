@@ -1,0 +1,134 @@
+.popular-recipes-section {
+  width: 100%;
+  max-width: 1200px;
+  margin: 60px auto 40px;
+  padding: 0 20px;
+}
+
+.popular-recipes-section h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.popular-recipes-subtitle {
+  font-size: 1rem;
+  color: #666;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.popular-recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.popular-recipes-loading,
+.popular-recipes-error {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 16px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #ff6b6b;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.popular-recipes-error p {
+  color: #f44336;
+  font-size: 1rem;
+}
+
+/* Responsive design for tablets */
+@media (max-width: 1023px) {
+  .popular-recipes-section {
+    margin: 50px auto 30px;
+  }
+
+  .popular-recipes-section h2 {
+    font-size: 1.75rem;
+  }
+
+  .popular-recipes-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+}
+
+/* Responsive design for mobile */
+@media (max-width: 767px) {
+  .popular-recipes-section {
+    margin: 40px auto 20px;
+    padding: 0 16px;
+  }
+
+  .popular-recipes-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .popular-recipes-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+  }
+
+  .popular-recipes-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+/* Horizontal scrollable layout alternative (commented out, using grid by default) */
+/*
+.popular-recipes-grid {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding-bottom: 16px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.popular-recipes-grid::-webkit-scrollbar {
+  height: 8px;
+}
+
+.popular-recipes-grid::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.popular-recipes-grid::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.popular-recipes-grid::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.popular-recipes-grid .recipe-card {
+  flex: 0 0 280px;
+  scroll-snap-align: start;
+}
+
+@media (max-width: 767px) {
+  .popular-recipes-grid .recipe-card {
+    flex: 0 0 240px;
+  }
+}
+*/

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import IngredientInput from '../components/IngredientInput';
 import SelectedIngredientsList from '../components/SelectedIngredientsList';
+import PopularRecipes from '../components/PopularRecipes';
 import './HomePage.css';
 
 const HomePage: React.FC = () => {
@@ -53,7 +54,7 @@ const HomePage: React.FC = () => {
         )}
       </div>
 
-      {/* PopularRecipes component will be added in task 16 */}
+      <PopularRecipes />
     </div>
   );
 };

@@ -329,15 +329,15 @@
     - Test removing items from shopping list
     - _Requirements: 6.4, 7.3, 7.4_
 
-- [ ] 16. Implement popular recipes section
-  - [ ] 16.1 Create PopularRecipes component
+- [x] 16. Implement popular recipes section
+  - [x] 16.1 Create PopularRecipes component
     - Fetch popular recipes from API
     - Display recipes in horizontal scrollable layout or grid
     - Show recipe name, image, and cooking time
     - Handle click to navigate to recipe detail
     - Display on homepage
     - _Requirements: 8.1, 8.2, 8.3_
-  - [ ] 16.2 Integrate PopularRecipes into HomePage
+  - [x] 16.2 Integrate PopularRecipes into HomePage
     - Add PopularRecipes component below ingredient input section
     - Ensure proper spacing and layout
     - _Requirements: 8.1, 8.2_
