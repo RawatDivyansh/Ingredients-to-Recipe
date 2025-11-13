@@ -3,3 +3,5 @@ export { default as ErrorBoundary } from './ErrorBoundary';
 export { default as ProtectedRoute } from './ProtectedRoute';
 export { default as IngredientInput } from './IngredientInput';
 export { default as SelectedIngredientsList } from './SelectedIngredientsList';
+export { default as RecipeCard } from './RecipeCard';
+export { default as FilterPanel } from './FilterPanel';
