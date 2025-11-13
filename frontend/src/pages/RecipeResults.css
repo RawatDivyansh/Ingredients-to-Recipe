@@ -223,8 +223,8 @@
   padding: 0 12px;
 }
 
-/* Responsive design */
-@media (max-width: 1024px) {
+/* Responsive design - Tablet (768-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
   .recipe-results-content {
     grid-template-columns: 1fr;
   }
@@ -232,50 +232,118 @@
   .recipe-results-filters {
     position: static;
   }
+
+  .recipe-results-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
+/* Mobile (320-767px) */
 @media (max-width: 767px) {
   .recipe-results {
-    padding: 16px;
+    padding: 12px;
+  }
+
+  .recipe-results-header {
+    margin-bottom: 16px;
   }
 
   .recipe-results-title {
     font-size: 1.5rem;
+    line-height: 1.3;
   }
 
   .recipe-results-subtitle {
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
   }
 
-  .recipe-results-grid {
+  .recipe-results-ingredients {
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .recipe-results-ingredient-tag {
+    padding: 4px 10px;
+    font-size: 0.8125rem;
+  }
+
+  .recipe-results-content {
     grid-template-columns: 1fr;
     gap: 16px;
   }
 
+  .recipe-results-filters {
+    position: static;
+  }
+
+  .recipe-results-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
   .recipe-results-empty,
   .recipe-results-error {
-    padding: 40px 20px;
+    padding: 32px 16px;
+  }
+
+  .recipe-results-empty-icon,
+  .recipe-results-error-icon {
+    font-size: 3rem;
+  }
+
+  .recipe-results-empty-title,
+  .recipe-results-error-title {
+    font-size: 1.25rem;
+  }
+
+  .recipe-results-empty-message,
+  .recipe-results-error-message {
+    font-size: 0.9375rem;
   }
 
   .recipe-results-pagination {
     flex-wrap: wrap;
     gap: 8px;
+    padding: 12px;
   }
 
   .recipe-results-pagination-button {
-    padding: 8px 16px;
+    padding: 10px 16px;
     font-size: 0.875rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .recipe-results-grid {
-    grid-template-columns: 1fr;
+    min-height: 44px; /* Touch-friendly */
   }
 
   .recipe-results-pagination-info {
     width: 100%;
     text-align: center;
     order: -1;
+    font-size: 0.875rem;
+  }
+}
+
+/* Small mobile (320-480px) */
+@media (max-width: 480px) {
+  .recipe-results {
+    padding: 8px;
+  }
+
+  .recipe-results-title {
+    font-size: 1.25rem;
+  }
+
+  .recipe-results-pagination-button {
+    flex: 1;
+    min-width: 100px;
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .recipe-results {
+    padding: 32px;
+  }
+
+  .recipe-results-grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   }
 }

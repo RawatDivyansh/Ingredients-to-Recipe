@@ -87,14 +87,39 @@
   font-weight: 500;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
+/* Responsive design - Mobile (320-767px) */
+@media (max-width: 767px) {
+  .shopping-list-button-container {
+    margin: 16px 0;
+  }
+
   .shopping-list-button {
-    font-size: 14px;
-    padding: 12px 16px;
+    font-size: 0.9375rem;
+    padding: 14px 16px;
+    min-height: 48px; /* Touch-friendly */
   }
 
   .button-icon {
-    font-size: 18px;
+    font-size: 20px;
+  }
+
+  .login-required,
+  .no-missing-ingredients {
+    padding: 12px;
+    font-size: 0.875rem;
+  }
+
+  .shopping-list-error,
+  .shopping-list-success {
+    margin-top: 8px;
+    padding: 10px;
+    font-size: 0.8125rem;
+  }
+}
+
+/* Tablet (768-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .shopping-list-button {
+    font-size: 0.9375rem;
   }
 }

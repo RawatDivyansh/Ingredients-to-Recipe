@@ -73,15 +73,38 @@
   z-index: 1000;
 }
 
-/* Mobile Responsive */
-@media (max-width: 768px) {
+/* Mobile Responsive (320-767px) */
+@media (max-width: 767px) {
+  .ingredient-input-container {
+    max-width: 100%;
+  }
+
   .ingredient-input {
     font-size: 16px; /* Prevents zoom on iOS */
     padding: 0.875rem;
+    min-height: 48px; /* Touch-friendly */
   }
 
   .ingredient-suggestion-item {
-    padding: 1rem;
-    min-height: 44px; /* Touch-friendly */
+    padding: 12px 16px;
+    min-height: 48px; /* Touch-friendly */
+    font-size: 1rem;
+  }
+
+  .ingredient-category {
+    font-size: 0.8125rem;
+  }
+
+  .ingredient-loading,
+  .ingredient-no-results {
+    padding: 12px 16px;
+    font-size: 1rem;
+  }
+}
+
+/* Tablet (768-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .ingredient-input-container {
+    max-width: 700px;
   }
 }

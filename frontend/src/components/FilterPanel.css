@@ -123,30 +123,11 @@
   font-weight: 600;
 }
 
-/* Mobile responsive */
-@media (max-width: 767px) {
-  .filter-panel {
-    padding: 16px;
-  }
-
-  .filter-panel-title {
-    font-size: 1.125rem;
-  }
-
-  .filter-section {
-    margin-bottom: 20px;
-  }
-
-  .filter-section-title {
-    font-size: 0.9375rem;
-  }
-}
-
 /* Collapsible filter panel for mobile */
 .filter-panel-mobile-toggle {
   display: none;
   width: 100%;
-  padding: 12px 16px;
+  padding: 14px 16px;
   background: white;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
@@ -157,6 +138,10 @@
   margin-bottom: 12px;
   text-align: left;
   transition: background-color 0.2s;
+  min-height: 48px; /* Touch-friendly */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .filter-panel-mobile-toggle:hover {
@@ -165,20 +150,83 @@
 
 .filter-panel-mobile-toggle::after {
   content: '▼';
-  float: right;
   transition: transform 0.2s;
+  font-size: 0.875rem;
 }
 
 .filter-panel-mobile-toggle.open::after {
   transform: rotate(180deg);
 }
 
+/* Mobile responsive (320-767px) */
 @media (max-width: 767px) {
   .filter-panel-mobile-toggle {
-    display: block;
+    display: flex;
   }
 
   .filter-panel.collapsed {
+    display: none;
+  }
+
+  .filter-panel {
+    padding: 16px;
+  }
+
+  .filter-panel-title {
+    font-size: 1.125rem;
+  }
+
+  .filter-panel-clear {
+    padding: 8px 12px;
+    min-height: 44px; /* Touch-friendly */
+    font-size: 0.875rem;
+  }
+
+  .filter-section {
+    margin-bottom: 20px;
+  }
+
+  .filter-section-title {
+    font-size: 1rem;
+    margin-bottom: 14px;
+  }
+
+  .filter-time-option,
+  .filter-dietary-option {
+    padding: 8px 4px;
+    min-height: 44px; /* Touch-friendly */
+    display: flex;
+    align-items: center;
+  }
+
+  .filter-time-option input[type="radio"],
+  .filter-dietary-option input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+  }
+
+  .filter-time-option label,
+  .filter-dietary-option label {
+    font-size: 1rem;
+    padding: 8px;
+    flex: 1;
+  }
+
+  .filter-results-count {
+    margin-top: 16px;
+    padding-top: 16px;
+    font-size: 1rem;
+  }
+}
+
+/* Tablet (768-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .filter-panel {
+    padding: 18px;
+  }
+
+  .filter-panel-mobile-toggle {
     display: none;
   }
 }

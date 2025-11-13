@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Design Test - Ingredients to Recipe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .viewport-info {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+
+        .viewport-info h2 {
+            color: #2e7d32;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .viewport-size {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1b5e20;
+        }
+
+        .breakpoint-indicator {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .test-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+        }
+
+        .test-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .touch-target {
+            display: inline-block;
+            min-width: 44px;
+            min-height: 44px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .touch-target:hover {
+            background: #2980b9;
+        }
+
+        .grid-demo {
+            display: grid;
+            gap: 16px;
+            margin-top: 15px;
+        }
+
+        .grid-item {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        /* Mobile (320-767px) */
+        @media (max-width: 767px) {
+            .breakpoint-indicator {
+                background: #ff6b6b;
+                color: white;
+            }
+
+            .breakpoint-indicator::before {
+                content: '📱 Mobile';
+            }
+
+            .grid-demo {
+                grid-template-columns: 1fr;
+            }
+
+            .test-container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Tablet (768-1023px) */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .breakpoint-indicator {
+                background: #f39c12;
+                color: white;
+            }
+
+            .breakpoint-indicator::before {
+                content: '📱 Tablet';
+            }
+
+            .grid-demo {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Desktop (1024px+) */
+        @media (min-width: 1024px) {
+            .breakpoint-indicator {
+                background: #27ae60;
+                color: white;
+            }
+
+            .breakpoint-indicator::before {
+                content: '🖥️ Desktop';
+            }
+
+            .grid-demo {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+        }
+
+        .checklist li::before {
+            content: '✓ ';
+            color: #27ae60;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .instructions {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 4px solid #ffc107;
+            margin-bottom: 20px;
+        }
+
+        .instructions h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .instructions p {
+            color: #856404;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Responsive Design Test Page</h1>
+        
+        <div class="instructions">
+            <h3>📋 Testing Instructions</h3>
+            <p>
+                Resize your browser window or use DevTools to test different viewport sizes.
+                The breakpoint indicator below will change color based on the current viewport:
+                <br><br>
+                🔴 Red = Mobile (320-767px)<br>
+                🟠 Orange = Tablet (768-1023px)<br>
+                🟢 Green = Desktop (1024px+)
+            </p>
+        </div>
+
+        <div class="viewport-info">
+            <h2>Current Viewport</h2>
+            <div class="viewport-size" id="viewport-size">Loading...</div>
+            <div class="breakpoint-indicator"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>Touch Target Test</h3>
+            <p>All buttons should be at least 44px × 44px on mobile devices:</p>
+            <button class="touch-target">Button 1</button>
+            <button class="touch-target">Button 2</button>
+            <button class="touch-target">Button 3</button>
+        </div>
+
+        <div class="test-section">
+            <h3>Responsive Grid Test</h3>
+            <p>Grid should show:</p>
+            <ul class="checklist">
+                <li>1 column on mobile (320-767px)</li>
+                <li>2 columns on tablet (768-1023px)</li>
+                <li>3 columns on desktop (1024px+)</li>
+            </ul>
+            <div class="grid-demo">
+                <div class="grid-item">Item 1</div>
+                <div class="grid-item">Item 2</div>
+                <div class="grid-item">Item 3</div>
+                <div class="grid-item">Item 4</div>
+                <div class="grid-item">Item 5</div>
+                <div class="grid-item">Item 6</div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>Responsive Checklist</h3>
+            <ul class="checklist">
+                <li>Text is readable without horizontal scrolling</li>
+                <li>Touch targets are minimum 44px × 44px</li>
+                <li>Images scale properly</li>
+                <li>Layout adapts to viewport size</li>
+                <li>No content overflow</li>
+                <li>Smooth transitions between breakpoints</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h3>Test Viewports</h3>
+            <p>Test these common viewport sizes:</p>
+            <ul class="checklist">
+                <li>320px - iPhone SE (Mobile)</li>
+                <li>375px - iPhone 12/13 (Mobile)</li>
+                <li>480px - Small Mobile</li>
+                <li>768px - iPad Portrait (Tablet)</li>
+                <li>1024px - iPad Landscape / Small Desktop</li>
+                <li>1920px - Full HD Desktop</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function updateViewportSize() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            document.getElementById('viewport-size').textContent = `${width}px × ${height}px`;
+        }
+
+        // Update on load
+        updateViewportSize();
+
+        // Update on resize
+        window.addEventListener('resize', updateViewportSize);
+
+        // Log viewport changes
+        let lastWidth = window.innerWidth;
+        window.addEventListener('resize', () => {
+            const currentWidth = window.innerWidth;
+            if (Math.abs(currentWidth - lastWidth) > 10) {
+                console.log(`Viewport changed: ${lastWidth}px → ${currentWidth}px`);
+                lastWidth = currentWidth;
+            }
+        });
+    </script>
+</body>
+</html>

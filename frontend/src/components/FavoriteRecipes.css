@@ -73,15 +73,34 @@
   max-width: 400px;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
+/* Responsive design - Mobile (320-767px) */
+@media (max-width: 767px) {
   .favorite-recipes-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
 
+  .favorite-recipes-loading {
+    padding: 2rem 1rem;
+  }
+
+  .loading-spinner {
+    width: 36px;
+    height: 36px;
+    border-width: 3px;
+  }
+
+  .favorite-recipes-loading p {
+    font-size: 0.9375rem;
+  }
+
+  .favorite-recipes-error {
+    padding: 1.5rem 1rem;
+    font-size: 0.9375rem;
+  }
+
   .favorite-recipes-empty {
-    padding: 3rem 1rem;
+    padding: 2.5rem 1rem;
   }
 
   .empty-state-icon {
@@ -90,5 +109,24 @@
 
   .favorite-recipes-empty h3 {
     font-size: 1.25rem;
+  }
+
+  .favorite-recipes-empty p {
+    font-size: 0.9375rem;
+  }
+}
+
+/* Tablet (768-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .favorite-recipes-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .favorite-recipes-grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   }
 }

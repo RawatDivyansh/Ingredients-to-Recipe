@@ -127,8 +127,17 @@
   font-size: 14px;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
+/* Responsive design - Mobile (320-767px) */
+@media (max-width: 767px) {
+  .rating-component {
+    padding: 16px;
+  }
+
+  .rating-header h3 {
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+  }
+
   .average-rating {
     flex-direction: column;
     align-items: flex-start;
@@ -137,9 +146,42 @@
 
   .star {
     font-size: 24px;
+    min-width: 44px; /* Touch-friendly for interactive stars */
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .star.interactive {
+    padding: 8px;
   }
 
   .user-rating-stars .star {
     font-size: 28px;
+  }
+
+  .rating-value {
+    font-size: 1.5rem;
+  }
+
+  .rating-count {
+    font-size: 0.8125rem;
+  }
+
+  .rating-prompt {
+    font-size: 0.9375rem;
+  }
+
+  .user-rating-section {
+    padding-top: 16px;
+    margin-top: 16px;
+  }
+}
+
+/* Tablet (768-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .rating-component {
+    padding: 18px;
   }
 }

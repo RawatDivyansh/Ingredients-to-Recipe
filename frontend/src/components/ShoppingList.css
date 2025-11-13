@@ -159,22 +159,68 @@
   max-width: 400px;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
+/* Responsive design - Mobile (320-767px) */
+@media (max-width: 767px) {
+  .shopping-list-header {
+    margin-bottom: 1.25rem;
+  }
+
+  .shopping-list-header h3 {
+    font-size: 1.125rem;
+  }
+
+  .shopping-list-items {
+    gap: 0.625rem;
+  }
+
   .shopping-list-item {
-    padding: 0.75rem;
+    padding: 12px;
   }
 
   .item-name {
-    font-size: 0.9rem;
+    font-size: 0.9375rem;
   }
 
   .item-quantity {
-    font-size: 0.8rem;
+    font-size: 0.8125rem;
+  }
+
+  .remove-button {
+    width: 36px;
+    height: 36px;
+    min-width: 44px; /* Touch-friendly */
+    min-height: 44px;
+    font-size: 1.25rem;
+    margin: -6px -6px -6px 0; /* Negative margin to maintain visual size */
+  }
+
+  .shopping-list-loading {
+    padding: 2rem 1rem;
+  }
+
+  .loading-spinner {
+    width: 36px;
+    height: 36px;
+    border-width: 3px;
+  }
+
+  .shopping-list-loading p {
+    font-size: 0.9375rem;
+  }
+
+  .shopping-list-error {
+    padding: 1.5rem 1rem;
+    font-size: 0.9375rem;
+  }
+
+  .retry-button {
+    padding: 10px 16px;
+    font-size: 0.9375rem;
+    min-height: 44px; /* Touch-friendly */
   }
 
   .shopping-list-empty {
-    padding: 3rem 1rem;
+    padding: 2.5rem 1rem;
   }
 
   .empty-state-icon {
@@ -183,5 +229,16 @@
 
   .shopping-list-empty h3 {
     font-size: 1.25rem;
+  }
+
+  .shopping-list-empty p {
+    font-size: 0.9375rem;
+  }
+}
+
+/* Tablet (768-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .shopping-list-item {
+    padding: 14px;
   }
 }

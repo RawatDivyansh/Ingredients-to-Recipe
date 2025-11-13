@@ -137,28 +137,106 @@
   color: #666;
 }
 
-/* Responsive design */
+/* Responsive design - Mobile (320-767px) */
 @media (max-width: 767px) {
-  .recipe-card-title {
-    font-size: 1.125rem;
+  .recipe-card {
+    /* Ensure card is touch-friendly */
+    min-height: 200px;
   }
 
-  .recipe-card-content {
-    padding: 12px;
+  .recipe-card-image-container {
+    padding-top: 60%; /* Slightly shorter aspect ratio for mobile */
+  }
+
+  .recipe-card-image-placeholder {
+    font-size: 3rem;
   }
 
   .recipe-card-match-badge {
     top: 8px;
     right: 8px;
-    padding: 4px 10px;
+    padding: 5px 10px;
     font-size: 0.8125rem;
+  }
+
+  .recipe-card-content {
+    padding: 14px;
+  }
+
+  .recipe-card-title {
+    font-size: 1.125rem;
+    margin-bottom: 10px;
+  }
+
+  .recipe-card-meta {
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 0.8125rem;
+  }
+
+  .recipe-card-time {
+    gap: 3px;
+  }
+
+  .recipe-card-difficulty {
+    padding: 3px 8px;
+    font-size: 0.75rem;
+  }
+
+  .recipe-card-description {
+    font-size: 0.875rem;
+    margin-bottom: 10px;
+    /* Limit lines on mobile for better layout */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .recipe-card-tags {
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+
+  .recipe-card-tag {
+    padding: 3px 8px;
+    font-size: 0.6875rem;
+  }
+
+  .recipe-card-rating {
+    font-size: 0.8125rem;
+  }
+
+  .recipe-card-stars {
+    font-size: 0.875rem;
   }
 }
 
+/* Small mobile (320-480px) */
 @media (max-width: 480px) {
   .recipe-card-meta {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .recipe-card-description {
+    -webkit-line-clamp: 2;
+  }
+}
+
+/* Tablet (768-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .recipe-card-content {
+    padding: 15px;
+  }
+
+  .recipe-card-title {
+    font-size: 1.1875rem;
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .recipe-card:hover {
+    transform: translateY(-6px);
   }
 }

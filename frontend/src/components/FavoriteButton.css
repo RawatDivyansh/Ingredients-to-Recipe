@@ -105,19 +105,42 @@
   text-align: center;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
+/* Responsive design - Mobile (320-767px) */
+@media (max-width: 767px) {
+  .favorite-button-container {
+    width: 100%;
+  }
+
   .favorite-button {
-    padding: 10px 20px;
-    font-size: 14px;
-    min-width: 120px;
+    padding: 12px 20px;
+    font-size: 0.9375rem;
+    min-width: 100%;
+    min-height: 48px; /* Touch-friendly */
   }
 
   .heart-icon {
-    font-size: 20px;
+    font-size: 22px;
   }
 
   .button-text {
-    font-size: 14px;
+    font-size: 0.9375rem;
+  }
+
+  .login-hint {
+    font-size: 0.8125rem;
+  }
+
+  .favorite-error {
+    padding: 10px;
+    font-size: 0.8125rem;
+  }
+}
+
+/* Tablet (768-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .favorite-button {
+    padding: 12px 24px;
+    font-size: 0.9375rem;
+    min-width: 160px;
   }
 }
