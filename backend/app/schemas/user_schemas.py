@@ -42,7 +42,18 @@ class FavoritesListResponse(BaseModel):
 
 class ShoppingListItemCreate(BaseModel):
     """Schema for creating shopping list items."""
-    ingredients: List[str] = Field(..., min_length=1, description="List of ingredient names to add")
+    ingredients: List[str] = Field(
+        ..., 
+        min_length=1, 
+        description="List of ingredient names to add"
+    )
+    
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "ingredients": ["chicken", "rice", "tomato"]
+            }
+        }
 
 
 class ShoppingListItemResponse(BaseModel):

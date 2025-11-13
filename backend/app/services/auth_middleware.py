@@ -1,12 +1,13 @@
 """
 Authentication middleware and dependencies for protected routes.
 """
-from fastapi import Depends, HTTPException, status, Cookie
+from fastapi import Depends, Cookie
 from typing import Optional
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.services import auth_service
 from app.models import User
+from app.exceptions import AuthenticationError
 
 
 async def get_current_user(
@@ -24,31 +25,37 @@ async def get_current_user(
         Current authenticated User object
         
     Raises:
-        HTTPException: If token is invalid or user not found (401)
+        AuthenticationError: If token is invalid or user not found
     """
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-    
     if not access_token:
-        raise credentials_exception
+        raise AuthenticationError(
+            detail="Could not validate credentials",
+            error_code="MISSING_TOKEN"
+        )
     
     # Verify token
     payload = auth_service.verify_token(access_token)
     if payload is None:
-        raise credentials_exception
+        raise AuthenticationError(
+            detail="Invalid or expired token",
+            error_code="INVALID_TOKEN"
+        )
     
     # Get user ID from token
     user_id: str = payload.get("sub")
     if user_id is None:
-        raise credentials_exception
+        raise AuthenticationError(
+            detail="Invalid token payload",
+            error_code="INVALID_TOKEN_PAYLOAD"
+        )
     
     # Get user from database
     user = auth_service.get_user_by_id(db, int(user_id))
     if user is None:
-        raise credentials_exception
+        raise AuthenticationError(
+            detail="User not found",
+            error_code="USER_NOT_FOUND"
+        )
     
     return user
 

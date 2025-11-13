@@ -21,13 +21,13 @@ class RecipeIngredientResponse(BaseModel):
 
 class RecipeBase(BaseModel):
     """Base schema for recipe."""
-    name: str
-    description: Optional[str] = None
-    instructions: List[str]
-    cooking_time_minutes: int
-    difficulty: str
-    serving_size: int
-    image_url: Optional[str] = None
+    name: str = Field(..., min_length=1, max_length=255, description="Recipe name")
+    description: Optional[str] = Field(None, max_length=1000, description="Recipe description")
+    instructions: List[str] = Field(..., min_length=1, description="List of cooking instructions")
+    cooking_time_minutes: int = Field(..., gt=0, le=1440, description="Cooking time in minutes (max 24 hours)")
+    difficulty: str = Field(..., pattern="^(easy|medium|hard)$", description="Difficulty level")
+    serving_size: int = Field(..., gt=0, le=100, description="Number of servings")
+    image_url: Optional[str] = Field(None, max_length=500, description="Recipe image URL")
     nutritional_info: Optional[Dict[str, Any]] = None
 
 

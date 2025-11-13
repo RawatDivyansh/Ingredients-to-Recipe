@@ -8,9 +8,9 @@ from datetime import datetime
 
 class IngredientBase(BaseModel):
     """Base schema for ingredient."""
-    name: str
-    category: str
-    synonyms: Optional[List[str]] = []
+    name: str = Field(..., min_length=1, max_length=100, description="Ingredient name")
+    category: str = Field(..., min_length=1, max_length=50, description="Ingredient category")
+    synonyms: Optional[List[str]] = Field(default_factory=list, description="List of ingredient synonyms")
 
 
 class IngredientCreate(IngredientBase):
