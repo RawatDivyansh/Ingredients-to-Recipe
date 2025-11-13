@@ -152,18 +152,18 @@
     - Test removing items from shopping list
     - _Requirements: 6.3, 6.4, 7.1, 7.2, 7.3, 7.4_
 
-- [ ] 8. Implement recipe rating system
-  - [ ] 8.1 Create rating service and API endpoints
+- [x] 8. Implement recipe rating system
+  - [x] 8.1 Create rating service and API endpoints
     - Implement POST /api/recipes/{recipe_id}/ratings endpoint (requires authentication)
     - Implement GET /api/recipes/{recipe_id}/ratings endpoint
     - Create function to calculate average rating
     - Implement logic to update existing rating if user has already rated
     - _Requirements: 10.1, 10.2, 10.3, 10.4, 10.5_
-  - [ ] 8.2 Update recipe endpoints to include rating information
+  - [x] 8.2 Update recipe endpoints to include rating information
     - Modify recipe search response to include average_rating and total_ratings
     - Modify recipe detail response to include user's rating if authenticated
     - _Requirements: 10.3, 10.4_
-  - [ ] 8.3 Write unit tests for rating service
+  - [x] 8.3 Write unit tests for rating service
     - Test rating creation
     - Test rating update
     - Test average rating calculation

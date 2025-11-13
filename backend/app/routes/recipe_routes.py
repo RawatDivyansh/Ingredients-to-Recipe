@@ -16,10 +16,11 @@ from app.schemas.recipe_schemas import (
     RecipeIngredientResponse,
     PopularRecipesResponse
 )
-from app.models import Recipe, RecipeIngredient, Ingredient, RecipeDietaryTag, DietaryTag, RecipeRating
+from app.models import Recipe, RecipeIngredient, Ingredient, RecipeDietaryTag, DietaryTag, RecipeRating, User
 from app.services.recipe_cache_service import generate_cache_key, get_cached_recipes
 from app.services.recipe_generation_service import generate_recipes
 from app.services.ingredient_service import normalize_ingredient_name
+from app.services.auth_middleware import get_current_user_optional
 
 logger = logging.getLogger(__name__)
 
@@ -67,7 +68,8 @@ def calculate_match_percentage(recipe: Recipe, user_ingredients: List[str]) -> f
 def enrich_recipe_with_details(
     recipe: Recipe,
     user_ingredients: List[str],
-    db: Session
+    db: Session,
+    user_id: Optional[int] = None
 ) -> RecipeResponse:
     """
     Enrich a recipe with match percentage, availability flags, and ratings.
@@ -76,6 +78,7 @@ def enrich_recipe_with_details(
         recipe: Recipe object
         user_ingredients: List of user's available ingredients
         db: Database session
+        user_id: Optional user ID to include user's rating
     
     Returns:
         RecipeResponse with enriched data
@@ -106,7 +109,7 @@ def enrich_recipe_with_details(
     # Get dietary tags
     dietary_tags = [rt.tag.name for rt in recipe.dietary_tags]
     
-    # Calculate average rating
+    # Calculate average rating and get user's rating
     ratings = db.query(
         func.avg(RecipeRating.rating).label('avg_rating'),
         func.count(RecipeRating.id).label('total_ratings')
@@ -114,6 +117,16 @@ def enrich_recipe_with_details(
     
     average_rating = float(ratings.avg_rating) if ratings.avg_rating else None
     total_ratings = ratings.total_ratings or 0
+    
+    # Get user's rating if user_id provided
+    user_rating = None
+    if user_id:
+        user_rating_obj = db.query(RecipeRating).filter(
+            RecipeRating.user_id == user_id,
+            RecipeRating.recipe_id == recipe.id
+        ).first()
+        if user_rating_obj:
+            user_rating = user_rating_obj.rating
     
     return RecipeResponse(
         id=recipe.id,
@@ -129,6 +142,7 @@ def enrich_recipe_with_details(
         dietary_tags=dietary_tags,
         average_rating=average_rating,
         total_ratings=total_ratings,
+        user_rating=user_rating,
         match_percentage=match_percentage,
         view_count=recipe.view_count,
         created_at=recipe.created_at
@@ -170,9 +184,10 @@ def apply_filters(query, filters: dict):
 
 
 @router.post("/search", response_model=RecipeSearchResponse)
-def search_recipes(
+async def search_recipes(
     search_request: RecipeSearchRequest,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user_optional)
 ):
     """
     Search for recipes based on available ingredients and filters.
@@ -259,8 +274,9 @@ def search_recipes(
         paginated_recipes = filtered_recipes[start_idx:end_idx]
         
         # Enrich recipes with details
+        user_id = current_user.id if current_user else None
         enriched_recipes = [
-            enrich_recipe_with_details(recipe, normalized_ingredients, db)
+            enrich_recipe_with_details(recipe, normalized_ingredients, db, user_id)
             for recipe in paginated_recipes
         ]
         
@@ -285,10 +301,47 @@ def search_recipes(
         )
 
 
+@router.get("/popular", response_model=PopularRecipesResponse)
+async def get_popular_recipes(
+    limit: int = Query(6, ge=1, le=50, description="Number of popular recipes to return"),
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user_optional)
+):
+    """
+    Get popular recipes sorted by view count.
+    
+    This endpoint returns the most viewed recipes, useful for homepage display.
+    Results are sorted by view_count in descending order.
+    
+    Args:
+        limit: Maximum number of recipes to return (default: 6, max: 50)
+        db: Database session
+    
+    Returns:
+        PopularRecipesResponse with list of popular recipes
+    """
+    # Query popular recipes sorted by view count
+    popular_recipes = db.query(Recipe).order_by(
+        desc(Recipe.view_count)
+    ).limit(limit).all()
+    
+    logger.info(f"Retrieved {len(popular_recipes)} popular recipes")
+    
+    # Enrich recipes with details (no user ingredients)
+    user_id = current_user.id if current_user else None
+    enriched_recipes = [
+        enrich_recipe_with_details(recipe, [], db, user_id)
+        for recipe in popular_recipes
+    ]
+    
+    return PopularRecipesResponse(recipes=enriched_recipes)
+
+
 @router.get("/{recipe_id}", response_model=RecipeResponse)
-def get_recipe_detail(
+async def get_recipe_detail(
     recipe_id: int = Path(..., description="Recipe ID"),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user_optional)
 ):
     """
     Get detailed information about a specific recipe.
@@ -325,40 +378,7 @@ def get_recipe_detail(
     logger.info(f"Retrieved recipe {recipe_id}: {recipe.name} (views: {recipe.view_count})")
     
     # Enrich recipe with details (no user ingredients, so all marked as unavailable)
-    enriched_recipe = enrich_recipe_with_details(recipe, [], db)
+    user_id = current_user.id if current_user else None
+    enriched_recipe = enrich_recipe_with_details(recipe, [], db, user_id)
     
     return enriched_recipe
-
-
-@router.get("/popular", response_model=PopularRecipesResponse)
-def get_popular_recipes(
-    limit: int = Query(6, ge=1, le=50, description="Number of popular recipes to return"),
-    db: Session = Depends(get_db)
-):
-    """
-    Get popular recipes sorted by view count.
-    
-    This endpoint returns the most viewed recipes, useful for homepage display.
-    Results are sorted by view_count in descending order.
-    
-    Args:
-        limit: Maximum number of recipes to return (default: 6, max: 50)
-        db: Database session
-    
-    Returns:
-        PopularRecipesResponse with list of popular recipes
-    """
-    # Query popular recipes sorted by view count
-    popular_recipes = db.query(Recipe).order_by(
-        desc(Recipe.view_count)
-    ).limit(limit).all()
-    
-    logger.info(f"Retrieved {len(popular_recipes)} popular recipes")
-    
-    # Enrich recipes with details (no user ingredients)
-    enriched_recipes = [
-        enrich_recipe_with_details(recipe, [], db)
-        for recipe in popular_recipes
-    ]
-    
-    return PopularRecipesResponse(recipes=enriched_recipes)

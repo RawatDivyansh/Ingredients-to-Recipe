@@ -38,6 +38,7 @@ class RecipeResponse(RecipeBase):
     dietary_tags: List[str]
     average_rating: Optional[float] = None
     total_ratings: int = 0
+    user_rating: Optional[int] = None
     match_percentage: Optional[float] = None
     view_count: int = 0
     created_at: datetime
