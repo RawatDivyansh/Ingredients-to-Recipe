@@ -5,3 +5,6 @@ export { default as IngredientInput } from './IngredientInput';
 export { default as SelectedIngredientsList } from './SelectedIngredientsList';
 export { default as RecipeCard } from './RecipeCard';
 export { default as FilterPanel } from './FilterPanel';
+export { default as RatingComponent } from './RatingComponent';
+export { default as ShoppingListButton } from './ShoppingListButton';
+export { default as FavoriteButton } from './FavoriteButton';

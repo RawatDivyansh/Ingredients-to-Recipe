@@ -1,0 +1,145 @@
+.rating-component {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.rating-header h3 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.average-rating {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.stars-display {
+  display: flex;
+  gap: 4px;
+}
+
+.star {
+  font-size: 28px;
+  color: #ffc107;
+}
+
+.star.filled {
+  color: #ffc107;
+}
+
+.star.empty {
+  color: #ddd;
+}
+
+.star.interactive {
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.star.interactive:hover {
+  transform: scale(1.2);
+}
+
+.rating-info {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.rating-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.rating-count {
+  font-size: 14px;
+  color: #666;
+}
+
+.user-rating-section {
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+  margin-top: 20px;
+}
+
+.rating-prompt {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.user-rating-stars {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.user-rating-stars .star {
+  font-size: 32px;
+}
+
+.rating-note {
+  font-size: 12px;
+  color: #999;
+  font-style: italic;
+}
+
+.login-prompt {
+  font-size: 14px;
+  color: #666;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #ddd;
+}
+
+.login-prompt a {
+  color: #ff6b6b;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-prompt a:hover {
+  text-decoration: underline;
+}
+
+.rating-error {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #ffebee;
+  color: #d32f2f;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.rating-success {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .average-rating {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .star {
+    font-size: 24px;
+  }
+
+  .user-rating-stars .star {
+    font-size: 28px;
+  }
+}
