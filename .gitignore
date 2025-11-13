@@ -54,8 +54,3 @@ backend/test.db
 backend/DATABASE_SETUP.md
 backend/MIGRATION_SUCCESS.md
 backend/AUTH_IMPLEMENTATION.md
-backend/alembic
-*.ini
-
-# venv
-./ingredient_venv

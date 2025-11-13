@@ -54,50 +54,50 @@
     - Test login with invalid credentials
     - _Requirements: 6.1, 6.2_
 
-- [ ] 4. Implement ingredient management features
-  - [ ] 4.1 Create ingredient service and API endpoints
+- [x] 4. Implement ingredient management features
+  - [x] 4.1 Create ingredient service and API endpoints
     - Implement GET /api/ingredients endpoint to retrieve all ingredients
     - Implement GET /api/ingredients/autocomplete endpoint with query parameter
     - Create ingredient normalization utility function
     - Implement synonym matching logic
     - _Requirements: 1.2, 1.3_
-  - [ ] 4.2 Implement autocomplete search functionality
+  - [x] 4.2 Implement autocomplete search functionality
     - Create database query with ILIKE pattern matching
     - Implement debouncing logic in service layer
     - Add limit parameter to control result count
     - _Requirements: 1.2_
-  - [ ] 4.3 Write unit tests for ingredient service
+  - [x] 4.3 Write unit tests for ingredient service
     - Test autocomplete with various query strings
     - Test ingredient normalization
     - Test synonym matching
     - _Requirements: 1.2_
 
-- [ ] 5. Integrate Groq API for recipe generation
-  - [ ] 5.1 Set up Groq API client and configuration
+- [x] 5. Integrate Groq API for recipe generation
+  - [x] 5.1 Set up Groq API client and configuration
     - Install groq Python package
     - Create Groq client service with API key from environment variable
     - Implement rate limiting to stay within free tier limits (30 req/min)
     - Add error handling for API failures
     - _Requirements: 2.1, 2.4_
-  - [ ] 5.2 Implement recipe generation prompt builder
+  - [x] 5.2 Implement recipe generation prompt builder
     - Create function to build structured prompt from ingredients and filters
     - Include dietary preferences in prompt (vegetarian, vegan, gluten-free)
     - Include cooking time constraints in prompt
     - Format prompt to request JSON response with specific structure
     - _Requirements: 2.1, 5.1, 5.2_
-  - [ ] 5.3 Create recipe generation service
+  - [x] 5.3 Create recipe generation service
     - Implement function to call Groq API with llama-3.3-70b-versatile model
     - Parse JSON response from AI into recipe objects
     - Handle malformed AI responses gracefully
     - Implement retry logic for transient failures
     - _Requirements: 2.1, 2.4_
-  - [ ] 5.4 Implement recipe caching system
+  - [x] 5.4 Implement recipe caching system
     - Create cache key generation from sorted ingredients and filters
     - Implement cache lookup before calling Groq API
     - Store generated recipes in database with cache_key
     - Set cache expiration to 7 days
     - _Requirements: 2.4_
-  - [ ] 5.5 Write unit tests for Groq integration
+  - [x] 5.5 Write unit tests for Groq integration
     - Test prompt building with various ingredient combinations
     - Test JSON parsing from AI responses
     - Test cache key generation
@@ -105,8 +105,8 @@
     - Mock Groq API calls in tests
     - _Requirements: 2.1, 2.4_
 
-- [ ] 6. Implement recipe search and retrieval endpoints
-  - [ ] 6.1 Create recipe search API endpoint
+- [x] 6. Implement recipe search and retrieval endpoints
+  - [x] 6.1 Create recipe search API endpoint
     - Implement POST /api/recipes/search endpoint
     - Check cache first for existing recipes
     - Call Groq API to generate recipes if cache miss
@@ -114,20 +114,20 @@
     - Return recipes with match percentage and availability flags
     - Implement pagination (20 recipes per page)
     - _Requirements: 2.1, 2.2, 2.4, 2.5, 5.3_
-  - [ ] 6.2 Implement recipe detail endpoint
+  - [x] 6.2 Implement recipe detail endpoint
     - Create GET /api/recipes/{recipe_id} endpoint
     - Include all recipe details (ingredients, instructions, metadata)
     - Include average rating and total ratings count
     - Include nutritional information if available
     - Increment view_count when recipe is accessed
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
-  - [ ] 6.3 Implement popular recipes endpoint
+  - [x] 6.3 Implement popular recipes endpoint
     - Create GET /api/recipes/popular endpoint
     - Query recipes sorted by view_count
     - Accept limit query parameter (default 6)
     - Implement caching with 5-minute TTL
     - _Requirements: 8.1, 8.2, 8.3, 8.4_
-  - [ ] 6.4 Write integration tests for recipe endpoints
+  - [x] 6.4 Write integration tests for recipe endpoints
     - Test recipe search with cache hit and miss scenarios
     - Test recipe detail retrieval
     - Test popular recipes endpoint
