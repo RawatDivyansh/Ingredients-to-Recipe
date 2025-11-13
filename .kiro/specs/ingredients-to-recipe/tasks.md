@@ -306,24 +306,24 @@
     - Test favoriting recipe
     - _Requirements: 3.1, 6.3, 7.1, 10.1_
 
-- [ ] 15. Implement user profile features
-  - [ ] 15.1 Create UserProfile page component
+- [x] 15. Implement user profile features
+  - [x] 15.1 Create UserProfile page component
     - Display user email and account information
     - Create navigation tabs for Favorites and Shopping List
     - _Requirements: 6.4, 7.3_
-  - [ ] 15.2 Create FavoriteRecipes component
+  - [x] 15.2 Create FavoriteRecipes component
     - Fetch user's favorite recipes from API
     - Display recipes in grid layout using RecipeCard component
     - Handle navigation to recipe detail
     - Display empty state if no favorites
     - _Requirements: 6.4, 6.5_
-  - [ ] 15.3 Create ShoppingList component
+  - [x] 15.3 Create ShoppingList component
     - Fetch shopping list items from API
     - Display items with ingredient name, quantity, and unit
     - Add remove button for each item
     - Display empty state if no items
     - _Requirements: 7.3, 7.4, 7.5_
-  - [ ] 15.4 Write integration tests for user profile
+  - [x] 15.4 Write integration tests for user profile
     - Test favorites display
     - Test shopping list display
     - Test removing items from shopping list

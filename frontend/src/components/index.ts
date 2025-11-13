@@ -8,3 +8,5 @@ export { default as FilterPanel } from './FilterPanel';
 export { default as RatingComponent } from './RatingComponent';
 export { default as ShoppingListButton } from './ShoppingListButton';
 export { default as FavoriteButton } from './FavoriteButton';
+export { default as FavoriteRecipes } from './FavoriteRecipes';
+export { default as ShoppingList } from './ShoppingList';
