@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosError } from 'axios';
+import { ApiError } from '../utils/apiError';
 
 // Create axios instance with base configuration
 const api: AxiosInstance = axios.create({
@@ -17,7 +18,7 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
-    return Promise.reject(error);
+    return Promise.reject(ApiError.fromAxiosError(error));
   }
 );
 
@@ -27,29 +28,17 @@ api.interceptors.response.use(
     return response;
   },
   (error: AxiosError) => {
-    if (error.response) {
-      // Server responded with error status
-      const status = error.response.status;
-      
-      if (status === 401) {
-        // Unauthorized - redirect to login or clear auth state
-        console.error('Unauthorized access - please login');
-      } else if (status === 403) {
-        console.error('Forbidden - insufficient permissions');
-      } else if (status === 404) {
-        console.error('Resource not found');
-      } else if (status >= 500) {
-        console.error('Server error - please try again later');
-      }
-    } else if (error.request) {
-      // Request made but no response received
-      console.error('Network error - please check your connection');
-    } else {
-      // Something else happened
-      console.error('An unexpected error occurred');
-    }
+    // Convert axios error to ApiError for consistent error handling
+    const apiError = ApiError.fromAxiosError(error);
     
-    return Promise.reject(error);
+    // Log errors for debugging
+    console.error('API Error:', {
+      message: apiError.message,
+      status: apiError.status,
+      data: apiError.data,
+    });
+    
+    return Promise.reject(apiError);
   }
 );
 

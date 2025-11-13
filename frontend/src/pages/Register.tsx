@@ -1,12 +1,15 @@
 import React, { useState, FormEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts';
+import { ErrorMessage } from '../components';
+import { validateEmail, validatePassword } from '../utils/validators';
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [localError, setLocalError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { register, error, clearError } = useAuth();
   const navigate = useNavigate();
 
@@ -15,19 +18,23 @@ const Register: React.FC = () => {
     setLocalError(null);
     clearError();
 
-    // Validation
-    if (!email || !password || !confirmPassword) {
-      setLocalError('Please fill in all fields');
+    // Validate email
+    const emailError = validateEmail(email);
+    if (emailError) {
+      setLocalError(emailError);
       return;
     }
 
-    if (!email.includes('@')) {
-      setLocalError('Please enter a valid email address');
+    // Validate password
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      setLocalError(passwordError);
       return;
     }
 
-    if (password.length < 6) {
-      setLocalError('Password must be at least 6 characters long');
+    // Validate confirm password
+    if (!confirmPassword) {
+      setLocalError('Please confirm your password');
       return;
     }
 
@@ -37,10 +44,13 @@ const Register: React.FC = () => {
     }
 
     try {
+      setIsLoading(true);
       await register({ email, password });
       navigate('/');
     } catch (err) {
       // Error is handled in context
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -52,9 +62,13 @@ const Register: React.FC = () => {
         <h1>Register</h1>
         <form onSubmit={handleSubmit} className="auth-form">
           {displayError && (
-            <div className="error-message" role="alert">
-              {displayError}
-            </div>
+            <ErrorMessage 
+              message={displayError} 
+              onDismiss={() => {
+                setLocalError(null);
+                clearError();
+              }} 
+            />
           )}
           
           <div className="form-group">
@@ -66,6 +80,7 @@ const Register: React.FC = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               required
+              disabled={isLoading}
             />
           </div>
 
@@ -78,6 +93,7 @@ const Register: React.FC = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password (min 6 characters)"
               required
+              disabled={isLoading}
             />
           </div>
 
@@ -90,11 +106,12 @@ const Register: React.FC = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm your password"
               required
+              disabled={isLoading}
             />
           </div>
 
-          <button type="submit" className="btn-primary">
-            Register
+          <button type="submit" className="btn-primary" disabled={isLoading}>
+            {isLoading ? 'Registering...' : 'Register'}
           </button>
         </form>
 

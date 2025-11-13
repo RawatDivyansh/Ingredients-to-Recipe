@@ -1,11 +1,14 @@
 import React, { useState, FormEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts';
+import { ErrorMessage } from '../components';
+import { validateEmail, validatePassword } from '../utils/validators';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [localError, setLocalError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { login, error, clearError } = useAuth();
   const navigate = useNavigate();
 
@@ -14,22 +17,28 @@ const Login: React.FC = () => {
     setLocalError(null);
     clearError();
 
-    // Basic validation
-    if (!email || !password) {
-      setLocalError('Please enter both email and password');
+    // Validate email
+    const emailError = validateEmail(email);
+    if (emailError) {
+      setLocalError(emailError);
       return;
     }
 
-    if (!email.includes('@')) {
-      setLocalError('Please enter a valid email address');
+    // Validate password
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      setLocalError(passwordError);
       return;
     }
 
     try {
+      setIsLoading(true);
       await login({ email, password });
       navigate('/');
     } catch (err) {
       // Error is handled in context
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -41,9 +50,13 @@ const Login: React.FC = () => {
         <h1>Login</h1>
         <form onSubmit={handleSubmit} className="auth-form">
           {displayError && (
-            <div className="error-message" role="alert">
-              {displayError}
-            </div>
+            <ErrorMessage 
+              message={displayError} 
+              onDismiss={() => {
+                setLocalError(null);
+                clearError();
+              }} 
+            />
           )}
           
           <div className="form-group">
@@ -55,6 +68,7 @@ const Login: React.FC = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               required
+              disabled={isLoading}
             />
           </div>
 
@@ -67,11 +81,12 @@ const Login: React.FC = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
               required
+              disabled={isLoading}
             />
           </div>
 
-          <button type="submit" className="btn-primary">
-            Login
+          <button type="submit" className="btn-primary" disabled={isLoading}>
+            {isLoading ? 'Logging in...' : 'Login'}
           </button>
         </form>
 
