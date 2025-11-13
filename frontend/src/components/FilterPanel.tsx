@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo, useCallback } from 'react';
 import { FilterOptions } from '../types';
 import './FilterPanel.css';
 
@@ -8,7 +8,7 @@ interface FilterPanelProps {
   recipeCount: number;
 }
 
-const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFilterChange, recipeCount }) => {
+const FilterPanel: React.FC<FilterPanelProps> = memo(({ filters, onFilterChange, recipeCount }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const timeRanges = [
@@ -20,14 +20,14 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFilterChange, reci
 
   const dietaryOptions = ['vegetarian', 'vegan', 'gluten-free'];
 
-  const handleTimeRangeChange = (range: [number, number] | null) => {
+  const handleTimeRangeChange = useCallback((range: [number, number] | null) => {
     onFilterChange({
       ...filters,
       cooking_time_range: range || undefined,
     });
-  };
+  }, [filters, onFilterChange]);
 
-  const handleDietaryChange = (option: string, checked: boolean) => {
+  const handleDietaryChange = useCallback((option: string, checked: boolean) => {
     const currentPreferences = filters.dietary_preferences || [];
     const newPreferences = checked
       ? [...currentPreferences, option]
@@ -37,11 +37,11 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFilterChange, reci
       ...filters,
       dietary_preferences: newPreferences.length > 0 ? newPreferences : undefined,
     });
-  };
+  }, [filters, onFilterChange]);
 
-  const handleClearFilters = () => {
+  const handleClearFilters = useCallback(() => {
     onFilterChange({});
-  };
+  }, [onFilterChange]);
 
   const hasActiveFilters = () => {
     return filters.cooking_time_range !== undefined || 
@@ -133,6 +133,8 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFilterChange, reci
       </div>
     </>
   );
-};
+});
+
+FilterPanel.displayName = 'FilterPanel';
 
 export default FilterPanel;

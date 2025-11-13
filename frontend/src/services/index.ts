@@ -1,4 +1,4 @@
-export { default as api } from './api';
+export { default as api, apiClient } from './api';
 export { recipeService } from './recipeService';
 export { ingredientService } from './ingredientService';
 export { authService } from './authService';

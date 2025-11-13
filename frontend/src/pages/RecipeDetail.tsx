@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Recipe, RecipeIngredient } from '../types';
 import { recipeService } from '../services';
-import { RatingComponent, ShoppingListButton, FavoriteButton } from '../components';
+import { RatingComponent, ShoppingListButton, FavoriteButton, SkeletonRecipeDetail } from '../components';
 import './RecipeDetail.css';
 
 interface IngredientListProps {
@@ -106,11 +106,7 @@ const RecipeDetail: React.FC = () => {
   }, [id]);
 
   if (loading) {
-    return (
-      <div className="recipe-detail-container">
-        <div className="loading-spinner">Loading recipe...</div>
-      </div>
-    );
+    return <SkeletonRecipeDetail />;
   }
 
   if (error || !recipe) {

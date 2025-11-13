@@ -1,0 +1,131 @@
+.skeleton-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.skeleton-card-image {
+  width: 100%;
+  padding-top: 66.67%; /* 3:2 aspect ratio */
+  background: #e0e0e0;
+  position: relative;
+}
+
+.skeleton-card-content {
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeleton-card-title {
+  height: 24px;
+  width: 80%;
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+
+.skeleton-card-meta {
+  display: flex;
+  gap: 12px;
+}
+
+.skeleton-card-meta-item {
+  height: 20px;
+  width: 80px;
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+
+.skeleton-card-description {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.skeleton-card-line {
+  height: 16px;
+  width: 100%;
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+
+.skeleton-card-line.short {
+  width: 60%;
+}
+
+.skeleton-card-tags {
+  display: flex;
+  gap: 6px;
+}
+
+.skeleton-card-tag {
+  height: 24px;
+  width: 70px;
+  background: #e0e0e0;
+  border-radius: 12px;
+}
+
+/* Shimmer animation */
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    #e0e0e0 0%,
+    #f0f0f0 50%,
+    #e0e0e0 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Responsive design - Mobile (320-767px) */
+@media (max-width: 767px) {
+  .skeleton-card-image {
+    padding-top: 60%;
+  }
+
+  .skeleton-card-content {
+    padding: 14px;
+    gap: 10px;
+  }
+
+  .skeleton-card-title {
+    height: 22px;
+  }
+
+  .skeleton-card-meta-item {
+    height: 18px;
+    width: 70px;
+  }
+
+  .skeleton-card-line {
+    height: 14px;
+  }
+
+  .skeleton-card-tag {
+    height: 22px;
+    width: 60px;
+  }
+}
+
+/* Tablet (768-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .skeleton-card-content {
+    padding: 15px;
+  }
+}

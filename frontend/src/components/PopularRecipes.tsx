@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Recipe } from '../types';
 import { recipeService } from '../services/recipeService';
 import RecipeCard from './RecipeCard';
+import SkeletonCard from './SkeletonCard';
 import './PopularRecipes.css';
 
-const PopularRecipes: React.FC = () => {
+const PopularRecipes: React.FC = memo(() => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -29,17 +30,19 @@ const PopularRecipes: React.FC = () => {
     fetchPopularRecipes();
   }, []);
 
-  const handleRecipeClick = (recipeId: number) => {
+  const handleRecipeClick = useCallback((recipeId: number) => {
     navigate(`/recipes/${recipeId}`);
-  };
+  }, [navigate]);
 
   if (loading) {
     return (
       <div className="popular-recipes-section">
         <h2>Popular Recipes</h2>
-        <div className="popular-recipes-loading">
-          <div className="loading-spinner"></div>
-          <p>Loading popular recipes...</p>
+        <p className="popular-recipes-subtitle">Discover trending recipes loved by our community</p>
+        <div className="popular-recipes-grid">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <SkeletonCard key={i} />
+          ))}
         </div>
       </div>
     );
@@ -76,6 +79,8 @@ const PopularRecipes: React.FC = () => {
       </div>
     </div>
   );
-};
+});
+
+PopularRecipes.displayName = 'PopularRecipes';
 
 export default PopularRecipes;

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Recipe, FilterOptions } from '../types';
 import { recipeService } from '../services/recipeService';
 import RecipeCard from '../components/RecipeCard';
 import FilterPanel from '../components/FilterPanel';
+import SkeletonCard from '../components/SkeletonCard';
 import './RecipeResults.css';
 
 const RECIPES_PER_PAGE = 20;
@@ -13,7 +14,6 @@ const RecipeResults: React.FC = () => {
   const location = useLocation();
   
   const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState<FilterOptions>({});
@@ -22,20 +22,7 @@ const RecipeResults: React.FC = () => {
   // Get ingredients from location state
   const ingredients = (location.state as any)?.ingredients || [];
 
-  useEffect(() => {
-    if (ingredients.length === 0) {
-      navigate('/');
-      return;
-    }
-    
-    fetchRecipes();
-  }, [ingredients]);
-
-  useEffect(() => {
-    applyFilters();
-  }, [recipes, filters]);
-
-  const fetchRecipes = async () => {
+  const fetchRecipes = useCallback(async () => {
     setLoading(true);
     setError(null);
     
@@ -52,9 +39,19 @@ const RecipeResults: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [ingredients]);
 
-  const applyFilters = () => {
+  useEffect(() => {
+    if (ingredients.length === 0) {
+      navigate('/');
+      return;
+    }
+    
+    fetchRecipes();
+  }, [ingredients, navigate, fetchRecipes]);
+
+  // Memoize filtered recipes to avoid unnecessary recalculations
+  const filteredRecipes = useMemo(() => {
     let filtered = [...recipes];
 
     // Apply cooking time filter
@@ -74,55 +71,86 @@ const RecipeResults: React.FC = () => {
       });
     }
 
-    setFilteredRecipes(filtered);
-    setCurrentPage(1); // Reset to first page when filters change
-  };
+    return filtered;
+  }, [recipes, filters]);
 
-  const handleFilterChange = (newFilters: FilterOptions) => {
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filteredRecipes]);
+
+  const handleFilterChange = useCallback((newFilters: FilterOptions) => {
     setFilters(newFilters);
-  };
+  }, []);
 
-  const handleRecipeClick = (recipeId: number) => {
+  const handleRecipeClick = useCallback((recipeId: number) => {
     navigate(`/recipes/${recipeId}`, {
       state: { availableIngredients: ingredients }
     });
-  };
+  }, [navigate, ingredients]);
 
-  const handleRetry = () => {
+  const handleRetry = useCallback(() => {
     fetchRecipes();
-  };
+  }, [fetchRecipes]);
 
-  const handleBackToHome = () => {
+  const handleBackToHome = useCallback(() => {
     navigate('/');
-  };
+  }, [navigate]);
 
-  // Pagination logic
-  const totalPages = Math.ceil(filteredRecipes.length / RECIPES_PER_PAGE);
-  const startIndex = (currentPage - 1) * RECIPES_PER_PAGE;
-  const endIndex = startIndex + RECIPES_PER_PAGE;
-  const currentRecipes = filteredRecipes.slice(startIndex, endIndex);
+  // Memoize pagination logic
+  const paginationData = useMemo(() => {
+    const totalPages = Math.ceil(filteredRecipes.length / RECIPES_PER_PAGE);
+    const startIndex = (currentPage - 1) * RECIPES_PER_PAGE;
+    const endIndex = startIndex + RECIPES_PER_PAGE;
+    const currentRecipes = filteredRecipes.slice(startIndex, endIndex);
+    
+    return { totalPages, currentRecipes };
+  }, [filteredRecipes, currentPage]);
 
-  const handlePreviousPage = () => {
+  const handlePreviousPage = useCallback(() => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  };
+  }, [currentPage]);
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
+  const handleNextPage = useCallback(() => {
+    if (currentPage < paginationData.totalPages) {
       setCurrentPage(currentPage + 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  };
+  }, [currentPage, paginationData.totalPages]);
 
   if (loading) {
     return (
       <div className="recipe-results">
         <div className="recipe-results-container">
-          <div className="recipe-results-loading">
-            <div className="recipe-results-spinner"></div>
-            <p className="recipe-results-loading-text">Finding delicious recipes for you...</p>
+          <div className="recipe-results-header">
+            <h1 className="recipe-results-title">Recipe Results</h1>
+            <p className="recipe-results-subtitle">
+              Finding delicious recipes for you...
+            </p>
+            {ingredients.length > 0 && (
+              <div className="recipe-results-ingredients">
+                {ingredients.map((ingredient: string, index: number) => (
+                  <span key={index} className="recipe-results-ingredient-tag">
+                    {ingredient}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="recipe-results-content">
+            <div className="recipe-results-filters">
+              <div className="skeleton-filter-panel skeleton-shimmer"></div>
+            </div>
+            <div className="recipe-results-main">
+              <div className="recipe-results-grid">
+                {[1, 2, 3, 4, 5, 6].map((i) => (
+                  <SkeletonCard key={i} />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -194,7 +222,7 @@ const RecipeResults: React.FC = () => {
 
             <div className="recipe-results-main">
               <div className="recipe-results-grid">
-                {currentRecipes.map((recipe) => (
+                {paginationData.currentRecipes.map((recipe) => (
                   <RecipeCard
                     key={recipe.id}
                     recipe={recipe}
@@ -203,7 +231,7 @@ const RecipeResults: React.FC = () => {
                 ))}
               </div>
 
-              {totalPages > 1 && (
+              {paginationData.totalPages > 1 && (
                 <div className="recipe-results-pagination">
                   <button
                     className="recipe-results-pagination-button"
@@ -213,12 +241,12 @@ const RecipeResults: React.FC = () => {
                     Previous
                   </button>
                   <span className="recipe-results-pagination-info">
-                    Page {currentPage} of {totalPages}
+                    Page {currentPage} of {paginationData.totalPages}
                   </span>
                   <button
                     className="recipe-results-pagination-button"
                     onClick={handleNextPage}
-                    disabled={currentPage === totalPages}
+                    disabled={currentPage === paginationData.totalPages}
                   >
                     Next
                   </button>

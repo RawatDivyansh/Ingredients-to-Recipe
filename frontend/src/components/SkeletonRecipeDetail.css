@@ -1,0 +1,283 @@
+.skeleton-recipe-detail {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.skeleton-back-button {
+  width: 150px;
+  height: 40px;
+  background: #e0e0e0;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.skeleton-recipe-header {
+  margin-bottom: 30px;
+}
+
+.skeleton-recipe-image {
+  width: 100%;
+  height: 400px;
+  background: #e0e0e0;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.skeleton-recipe-title-section {
+  margin-bottom: 20px;
+}
+
+.skeleton-recipe-name {
+  height: 40px;
+  width: 60%;
+  background: #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.skeleton-recipe-description {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-line {
+  height: 16px;
+  width: 100%;
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+
+.skeleton-line.short {
+  width: 70%;
+}
+
+.skeleton-recipe-metadata {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.skeleton-metadata-item {
+  height: 24px;
+  width: 150px;
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+
+.skeleton-dietary-tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.skeleton-tag {
+  height: 32px;
+  width: 100px;
+  background: #e0e0e0;
+  border-radius: 20px;
+}
+
+.skeleton-recipe-actions {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.skeleton-action-button {
+  flex: 1;
+  height: 50px;
+  background: #e0e0e0;
+  border-radius: 8px;
+}
+
+.skeleton-recipe-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 40px;
+  margin-bottom: 30px;
+}
+
+.skeleton-section-title {
+  height: 28px;
+  width: 150px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.skeleton-ingredient-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-ingredient-item {
+  height: 48px;
+  width: 100%;
+  background: #e0e0e0;
+  border-radius: 5px;
+}
+
+.skeleton-instruction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.skeleton-instruction-item {
+  display: flex;
+  gap: 15px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.skeleton-step-number {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  background: #e0e0e0;
+  border-radius: 50%;
+}
+
+.skeleton-step-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Shimmer animation */
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    #e0e0e0 0%,
+    #f0f0f0 50%,
+    #e0e0e0 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Responsive design - Mobile (320-767px) */
+@media (max-width: 767px) {
+  .skeleton-recipe-detail {
+    padding: 12px;
+  }
+
+  .skeleton-back-button {
+    width: 120px;
+    height: 44px;
+    margin-bottom: 16px;
+  }
+
+  .skeleton-recipe-image {
+    height: 250px;
+    margin-bottom: 16px;
+  }
+
+  .skeleton-recipe-name {
+    height: 32px;
+    width: 80%;
+  }
+
+  .skeleton-recipe-metadata {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .skeleton-metadata-item {
+    width: 100%;
+  }
+
+  .skeleton-dietary-tags {
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .skeleton-tag {
+    height: 28px;
+    width: 80px;
+  }
+
+  .skeleton-recipe-actions {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
+  .skeleton-recipe-content {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  .skeleton-section-title {
+    height: 24px;
+    width: 120px;
+    margin-bottom: 16px;
+  }
+
+  .skeleton-ingredient-item {
+    height: 44px;
+  }
+
+  .skeleton-instruction-item {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .skeleton-step-number {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Tablet (768-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .skeleton-recipe-detail {
+    padding: 16px;
+  }
+
+  .skeleton-recipe-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .skeleton-recipe-name {
+    height: 36px;
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .skeleton-recipe-detail {
+    padding: 24px;
+  }
+
+  .skeleton-recipe-image {
+    height: 500px;
+  }
+}

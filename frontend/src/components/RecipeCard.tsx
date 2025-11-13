@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Recipe } from '../types';
 import './RecipeCard.css';
 
@@ -7,7 +7,7 @@ interface RecipeCardProps {
   onClick: () => void;
 }
 
-const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onClick }) => {
+const RecipeCard: React.FC<RecipeCardProps> = memo(({ recipe, onClick }) => {
   const getMatchColor = (percentage?: number): string => {
     if (!percentage) return '#999';
     if (percentage >= 80) return '#4caf50';
@@ -92,6 +92,8 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onClick }) => {
       </div>
     </div>
   );
-};
+});
+
+RecipeCard.displayName = 'RecipeCard';
 
 export default RecipeCard;

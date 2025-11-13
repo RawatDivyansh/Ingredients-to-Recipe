@@ -380,7 +380,7 @@
     - Display validation errors inline
     - _Requirements: 9.2, 9.4_
 
-- [ ] 19. Implement API client service
+- [x] 19. Implement API client service
   - Create centralized API client using Axios
   - Configure base URL from environment variable
   - Add request interceptor for authentication token
@@ -388,13 +388,13 @@
   - Create typed API methods for all endpoints
   - _Requirements: All API-dependent requirements_
 
-- [ ] 20. Add loading states and performance optimization
-  - [ ] 20.1 Implement loading indicators
+- [x] 20. Add loading states and performance optimization
+  - [x] 20.1 Implement loading indicators
     - Add loading spinner for recipe search
     - Add skeleton screens for recipe cards
     - Add loading state for recipe detail page
     - _Requirements: 2.4_
-  - [ ] 20.2 Optimize frontend performance
+  - [x] 20.2 Optimize frontend performance
     - Implement code splitting by route using React.lazy
     - Add lazy loading for recipe images
     - Memoize expensive computations using React.memo and useMemo

@@ -1,4 +1,4 @@
-import api from './api';
+import { apiClient } from './api';
 import { Recipe, ShoppingListItem } from '../types';
 import { ApiError } from '../utils/apiError';
 
@@ -6,8 +6,7 @@ export const userService = {
   // Favorites
   addFavorite: async (recipeId: number): Promise<{ success: boolean }> => {
     try {
-      const response = await api.post(`/api/users/favorites/${recipeId}`);
-      return response.data;
+      return await apiClient.addFavorite(recipeId);
     } catch (error) {
       if (error instanceof ApiError) {
         throw error;
@@ -18,8 +17,7 @@ export const userService = {
 
   getFavorites: async (): Promise<{ recipes: Recipe[] }> => {
     try {
-      const response = await api.get('/api/users/favorites');
-      return response.data;
+      return await apiClient.getFavorites();
     } catch (error) {
       if (error instanceof ApiError) {
         throw error;
@@ -30,8 +28,7 @@ export const userService = {
 
   removeFavorite: async (recipeId: number): Promise<{ success: boolean }> => {
     try {
-      const response = await api.delete(`/api/users/favorites/${recipeId}`);
-      return response.data;
+      return await apiClient.removeFavorite(recipeId);
     } catch (error) {
       if (error instanceof ApiError) {
         throw error;
@@ -43,8 +40,7 @@ export const userService = {
   // Shopping List
   addToShoppingList: async (ingredients: string[]): Promise<{ success: boolean }> => {
     try {
-      const response = await api.post('/api/users/shopping-list', { ingredients });
-      return response.data;
+      return await apiClient.addToShoppingList(ingredients);
     } catch (error) {
       if (error instanceof ApiError) {
         throw error;
@@ -55,8 +51,7 @@ export const userService = {
 
   getShoppingList: async (): Promise<{ items: ShoppingListItem[] }> => {
     try {
-      const response = await api.get('/api/users/shopping-list');
-      return response.data;
+      return await apiClient.getShoppingList();
     } catch (error) {
       if (error instanceof ApiError) {
         throw error;
@@ -67,8 +62,7 @@ export const userService = {
 
   removeFromShoppingList: async (itemId: number): Promise<{ success: boolean }> => {
     try {
-      const response = await api.delete(`/api/users/shopping-list/${itemId}`);
-      return response.data;
+      return await apiClient.removeFromShoppingList(itemId);
     } catch (error) {
       if (error instanceof ApiError) {
         throw error;

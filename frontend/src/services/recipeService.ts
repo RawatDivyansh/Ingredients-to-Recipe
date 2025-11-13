@@ -1,4 +1,4 @@
-import api from './api';
+import { apiClient } from './api';
 import { Recipe, RecipeSearchRequest } from '../types';
 import { ApiError } from '../utils/apiError';
 
@@ -6,8 +6,7 @@ export const recipeService = {
   // Search for recipes based on ingredients and filters
   searchRecipes: async (searchRequest: RecipeSearchRequest): Promise<{ recipes: Recipe[]; total: number }> => {
     try {
-      const response = await api.post('/api/recipes/search', searchRequest);
-      return response.data;
+      return await apiClient.searchRecipes(searchRequest);
     } catch (error) {
       if (error instanceof ApiError) {
         throw error;
@@ -19,8 +18,7 @@ export const recipeService = {
   // Get recipe details by ID
   getRecipeById: async (recipeId: number): Promise<Recipe> => {
     try {
-      const response = await api.get(`/api/recipes/${recipeId}`);
-      return response.data;
+      return await apiClient.getRecipeById(recipeId);
     } catch (error) {
       if (error instanceof ApiError) {
         throw error;
@@ -32,10 +30,7 @@ export const recipeService = {
   // Get popular recipes
   getPopularRecipes: async (limit: number = 6): Promise<{ recipes: Recipe[] }> => {
     try {
-      const response = await api.get('/api/recipes/popular', {
-        params: { limit },
-      });
-      return response.data;
+      return await apiClient.getPopularRecipes(limit);
     } catch (error) {
       if (error instanceof ApiError) {
         throw error;
@@ -47,8 +42,7 @@ export const recipeService = {
   // Submit a rating for a recipe
   rateRecipe: async (recipeId: number, rating: number): Promise<{ success: boolean; averageRating: number }> => {
     try {
-      const response = await api.post(`/api/recipes/${recipeId}/ratings`, { rating });
-      return response.data;
+      return await apiClient.rateRecipe(recipeId, rating);
     } catch (error) {
       if (error instanceof ApiError) {
         throw error;
@@ -60,8 +54,7 @@ export const recipeService = {
   // Get ratings for a recipe
   getRecipeRatings: async (recipeId: number): Promise<{ averageRating: number; totalRatings: number; userRating?: number }> => {
     try {
-      const response = await api.get(`/api/recipes/${recipeId}/ratings`);
-      return response.data;
+      return await apiClient.getRecipeRatings(recipeId);
     } catch (error) {
       if (error instanceof ApiError) {
         throw error;

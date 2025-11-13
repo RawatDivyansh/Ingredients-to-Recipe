@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback, memo } from 'react';
 import { ingredientService } from '../services/ingredientService';
 import { useDebounce } from '../hooks/useDebounce';
 import { Ingredient } from '../types';
@@ -8,7 +8,7 @@ interface IngredientInputProps {
   onIngredientSelect: (ingredient: string) => void;
 }
 
-const IngredientInput: React.FC<IngredientInputProps> = ({ onIngredientSelect }) => {
+const IngredientInput: React.FC<IngredientInputProps> = memo(({ onIngredientSelect }) => {
   const [inputValue, setInputValue] = useState('');
   const [suggestions, setSuggestions] = useState<Ingredient[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -54,18 +54,18 @@ const IngredientInput: React.FC<IngredientInputProps> = ({ onIngredientSelect })
     };
   }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
-  };
+  }, []);
 
-  const handleSuggestionClick = (ingredient: Ingredient) => {
+  const handleSuggestionClick = useCallback((ingredient: Ingredient) => {
     onIngredientSelect(ingredient.name);
     setInputValue('');
     setSuggestions([]);
     setShowDropdown(false);
-  };
+  }, [onIngredientSelect]);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && inputValue.trim()) {
       e.preventDefault();
       onIngredientSelect(inputValue.trim());
@@ -73,7 +73,7 @@ const IngredientInput: React.FC<IngredientInputProps> = ({ onIngredientSelect })
       setSuggestions([]);
       setShowDropdown(false);
     }
-  };
+  }, [inputValue, onIngredientSelect]);
 
   return (
     <div className="ingredient-input-container" ref={dropdownRef}>
@@ -115,6 +115,8 @@ const IngredientInput: React.FC<IngredientInputProps> = ({ onIngredientSelect })
       )}
     </div>
   );
-};
+});
+
+IngredientInput.displayName = 'IngredientInput';
 
 export default IngredientInput;
