@@ -216,26 +216,26 @@
     - Test AuthContext state management
     - _Requirements: 6.1, 6.2_
 
-- [ ] 12. Implement ingredient input interface
-  - [ ] 12.1 Create IngredientInput component
+- [x] 12. Implement ingredient input interface
+  - [x] 12.1 Create IngredientInput component
     - Create text input field with onChange handler
     - Implement debounced autocomplete API call (300ms delay)
     - Display autocomplete suggestions dropdown
     - Handle ingredient selection from suggestions
     - Implement minimum 2 characters before triggering autocomplete
     - _Requirements: 1.1, 1.2, 1.3_
-  - [ ] 12.2 Create SelectedIngredientsList component
+  - [x] 12.2 Create SelectedIngredientsList component
     - Display list of selected ingredients with visual tags
     - Implement remove button for each ingredient
     - Add "Add More Ingredients" functionality
     - _Requirements: 1.3, 1.4, 1.5_
-  - [ ] 12.3 Create HomePage component
+  - [x] 12.3 Create HomePage component
     - Integrate IngredientInput component
     - Add "Get Recipes" button
     - Handle form submission to navigate to recipe results
     - Display clear heading and instructions
     - _Requirements: 1.1, 1.3, 1.4_
-  - [ ] 12.4 Write unit tests for ingredient input components
+  - [x] 12.4 Write unit tests for ingredient input components
     - Test autocomplete triggering
     - Test ingredient selection
     - Test ingredient removal

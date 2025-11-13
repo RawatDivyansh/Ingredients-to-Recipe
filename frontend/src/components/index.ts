@@ -1,3 +1,5 @@
 export { default as Layout } from './Layout';
 export { default as ErrorBoundary } from './ErrorBoundary';
 export { default as ProtectedRoute } from './ProtectedRoute';
+export { default as IngredientInput } from './IngredientInput';
+export { default as SelectedIngredientsList } from './SelectedIngredientsList';
