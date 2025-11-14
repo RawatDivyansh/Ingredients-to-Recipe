@@ -1,5 +1,6 @@
 import React, { useState, memo, useCallback, useRef } from 'react';
 import { FilterOptions } from '../types';
+import HelpIcon from './HelpIcon';
 import './FilterPanel.css';
 
 interface FilterPanelProps {
@@ -174,7 +175,15 @@ const FilterPanel: React.FC<FilterPanelProps> = memo(({ filters, onFilterChange,
         )}
 
         <div className="filter-section">
-          <h4 className="filter-section-title">Cooking Time</h4>
+          <div className="filter-section-header">
+            <h4 className="filter-section-title">Cooking Time</h4>
+            <HelpIcon
+              content="Filter recipes by how long they take to prepare and cook."
+              position="right"
+              size="small"
+              ariaLabel="Help with cooking time filter"
+            />
+          </div>
           <div className="filter-time-options">
             <div className="filter-time-option">
               <input
@@ -206,7 +215,15 @@ const FilterPanel: React.FC<FilterPanelProps> = memo(({ filters, onFilterChange,
         </div>
 
         <div className="filter-section">
-          <h4 className="filter-section-title">Dietary Preferences</h4>
+          <div className="filter-section-header">
+            <h4 className="filter-section-title">Dietary Preferences</h4>
+            <HelpIcon
+              content="Select dietary requirements to filter recipes. You can choose multiple options."
+              position="right"
+              size="small"
+              ariaLabel="Help with dietary preferences filter"
+            />
+          </div>
           <div className="filter-dietary-options">
             {dietaryOptions.map((option, index) => {
               const isChecked = pendingFilters.dietary_preferences?.includes(option) || false;

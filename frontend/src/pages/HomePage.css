@@ -7,9 +7,23 @@
   margin: 0 auto;
 }
 
+.ingredient-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm, 0.5rem);
+}
+
+.ingredient-input-wrapper > :first-child {
+  flex: 1;
+}
+
 .get-recipes-section {
   margin-top: 2rem;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm, 0.5rem);
 }
 
 .btn-get-recipes {

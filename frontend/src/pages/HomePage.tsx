@@ -4,7 +4,7 @@ import IngredientInput from '../components/IngredientInput';
 import SelectedIngredientsList from '../components/SelectedIngredientsList';
 import PopularRecipes from '../components/PopularRecipes';
 import HeroSection from '../components/HeroSection';
-import { ErrorMessage } from '../components';
+import { ErrorMessage, HelpIcon } from '../components';
 import { validateIngredients } from '../utils/validators';
 import './HomePage.css';
 
@@ -50,7 +50,14 @@ const HomePage: React.FC = () => {
       <div className="ingredient-section">
         {error && <ErrorMessage message={error} onDismiss={() => setError(null)} />}
         
-        <IngredientInput onIngredientSelect={handleIngredientSelect} />
+        <div className="ingredient-input-wrapper">
+          <IngredientInput onIngredientSelect={handleIngredientSelect} />
+          <HelpIcon
+            content="Start typing an ingredient name and select from the suggestions. Add at least 2 ingredients to find recipes."
+            position="right"
+            ariaLabel="Help with ingredient input"
+          />
+        </div>
         
         <SelectedIngredientsList
           ingredients={selectedIngredients}
@@ -63,6 +70,11 @@ const HomePage: React.FC = () => {
               Get Recipes {selectedIngredients.length > 0 && `(${selectedIngredients.length} ingredient${selectedIngredients.length !== 1 ? 's' : ''})`}
             </span>
           </button>
+          <HelpIcon
+            content="Click to search for recipes using your selected ingredients. You need at least 2 ingredients."
+            position="top"
+            ariaLabel="Help with getting recipes"
+          />
         </div>
       </div>
 

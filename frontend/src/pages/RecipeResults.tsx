@@ -8,6 +8,7 @@ import SkeletonCard from '../components/SkeletonCard';
 import SkeletonLoader from '../components/SkeletonLoader';
 import RecipeStatsDashboard from '../components/RecipeStatsDashboard';
 import AnimatedEmptyState from '../components/AnimatedEmptyState';
+import HelpIcon from '../components/HelpIcon';
 import './RecipeResults.css';
 
 const RECIPES_PER_PAGE = 20;
@@ -181,7 +182,14 @@ const RecipeResults: React.FC = () => {
     <div className="recipe-results">
       <div className="recipe-results-container">
         <div className="recipe-results-header">
-          <h1 className="recipe-results-title">Recipe Results</h1>
+          <div className="recipe-results-title-wrapper">
+            <h1 className="recipe-results-title">Recipe Results</h1>
+            <HelpIcon
+              content="Browse recipes that match your ingredients. Use filters on the left to narrow down results by cooking time and dietary preferences."
+              position="bottom"
+              ariaLabel="Help with recipe results"
+            />
+          </div>
           <p className="recipe-results-subtitle">
             Showing recipes based on your ingredients
           </p>

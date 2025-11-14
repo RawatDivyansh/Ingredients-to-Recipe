@@ -1,0 +1,121 @@
+.help-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--color-secondary);
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-out),
+              transform var(--duration-fast) var(--ease-out);
+  position: relative;
+}
+
+.help-icon:hover {
+  color: var(--color-secondary-dark);
+  transform: scale(1.1);
+}
+
+.help-icon:active {
+  transform: scale(0.95);
+}
+
+.help-icon:focus {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+  border-radius: var(--radius-full);
+}
+
+.help-icon:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Size variants */
+.help-icon--small {
+  width: 16px;
+  height: 16px;
+}
+
+.help-icon--small .help-icon__svg {
+  width: 16px;
+  height: 16px;
+}
+
+.help-icon--medium {
+  width: 20px;
+  height: 20px;
+}
+
+.help-icon--medium .help-icon__svg {
+  width: 20px;
+  height: 20px;
+}
+
+.help-icon--large {
+  width: 24px;
+  height: 24px;
+}
+
+.help-icon--large .help-icon__svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* SVG icon */
+.help-icon__svg {
+  display: block;
+}
+
+/* Pulsing indicator */
+.help-icon--pulse::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: var(--color-secondary);
+  opacity: 0.3;
+  transform: translate(-50%, -50%);
+  animation: helpIconPulse 2s ease-in-out infinite;
+}
+
+@keyframes helpIconPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Disable pulse on hover */
+.help-icon--pulse:hover::before {
+  animation: none;
+  opacity: 0;
+}
+
+/* Accessibility: Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .help-icon--pulse::before {
+    animation: none;
+    opacity: 0.2;
+  }
+  
+  .help-icon {
+    transition: none;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .help-icon {
+    /* Ensure minimum touch target size */
+    min-width: 44px;
+    min-height: 44px;
+  }
+}

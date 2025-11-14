@@ -28,3 +28,5 @@ export { default as Parallax } from './Parallax';
 export { default as FilterTransition, FilterTransitionGroup } from './FilterTransition';
 export { default as RecipeStatsDashboard } from './RecipeStatsDashboard';
 export { default as AnimatedEmptyState } from './AnimatedEmptyState';
+export { default as AnimatedTooltip } from './AnimatedTooltip';
+export { default as HelpIcon } from './HelpIcon';
