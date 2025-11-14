@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design System Test</title>
+  <link rel="stylesheet" href="./variables.css">
+  <link rel="stylesheet" href="./keyframes.css">
+  <link rel="stylesheet" href="./animations.css">
+  <style>
+    body {
+      font-family: var(--font-family-base);
+      padding: var(--spacing-xl);
+      background: var(--color-background);
+      color: var(--color-text-primary);
+    }
+    
+    .test-section {
+      margin-bottom: var(--spacing-2xl);
+      padding: var(--spacing-lg);
+      border: 1px solid var(--color-neutral-light);
+      border-radius: var(--radius-lg);
+    }
+    
+    .test-section h2 {
+      font-size: var(--font-size-h2);
+      margin-bottom: var(--spacing-md);
+      color: var(--color-primary);
+    }
+    
+    .color-swatch {
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+      margin: var(--spacing-sm);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .animation-demo {
+      display: inline-block;
+      padding: var(--spacing-md) var(--spacing-lg);
+      margin: var(--spacing-sm);
+      background: var(--gradient-primary);
+      color: white;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="font-size: var(--font-size-hero); margin-bottom: var(--spacing-xl);">
+    Design System Test
+  </h1>
+  
+  <div class="test-section">
+    <h2>Color Palette</h2>
+    <div class="color-swatch" style="background: var(--color-primary);"></div>
+    <div class="color-swatch" style="background: var(--color-secondary);"></div>
+    <div class="color-swatch" style="background: var(--color-accent);"></div>
+    <div class="color-swatch" style="background: var(--gradient-primary);"></div>
+    <div class="color-swatch" style="background: var(--gradient-secondary);"></div>
+  </div>
+  
+  <div class="test-section">
+    <h2>Animations</h2>
+    <div class="animation-demo animate-fade-in-up">Fade In Up</div>
+    <div class="animation-demo animate-bounce-in">Bounce In</div>
+    <div class="animation-demo animate-pulse">Pulse</div>
+    <div class="animation-demo animate-float">Float</div>
+    <div class="animation-demo animate-shimmer">Shimmer</div>
+  </div>
+  
+  <div class="test-section">
+    <h2>Hover Effects</h2>
+    <div class="animation-demo hover-lift">Hover Lift</div>
+    <div class="animation-demo hover-scale">Hover Scale</div>
+    <div class="animation-demo hover-glow">Hover Glow</div>
+  </div>
+  
+  <div class="test-section">
+    <h2>Loading States</h2>
+    <div class="skeleton" style="width: 200px; height: 20px; margin-bottom: var(--spacing-sm);"></div>
+    <div class="skeleton" style="width: 300px; height: 20px; margin-bottom: var(--spacing-sm);"></div>
+    <div class="skeleton" style="width: 150px; height: 20px;"></div>
+    <div style="margin-top: var(--spacing-lg);">
+      <div class="spinner"></div>
+    </div>
+  </div>
+  
+  <div class="test-section">
+    <h2>Reduced Motion Test</h2>
+    <p>Open DevTools and enable "prefers-reduced-motion" to test accessibility.</p>
+    <div class="animation-demo animate-bounce">This should not animate with reduced motion</div>
+  </div>
+</body>
+</html>

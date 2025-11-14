@@ -1,0 +1,112 @@
+/* ContentReveal Component Styles */
+
+.content-reveal {
+  opacity: 0;
+  transition-property: opacity, transform;
+  transition-duration: var(--reveal-duration, 600ms);
+  transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.content-reveal-item {
+  opacity: 0;
+  transition-property: opacity, transform;
+  transition-duration: var(--reveal-duration, 600ms);
+  transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* ===========================
+   FADE ANIMATION
+   =========================== */
+
+.content-reveal-fade {
+  transform: none;
+}
+
+.content-reveal-fade.content-reveal-visible {
+  opacity: 1;
+}
+
+/* ===========================
+   FADE UP ANIMATION
+   =========================== */
+
+.content-reveal-fadeUp {
+  transform: translateY(30px);
+}
+
+.content-reveal-fadeUp.content-reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===========================
+   FADE DOWN ANIMATION
+   =========================== */
+
+.content-reveal-fadeDown {
+  transform: translateY(-30px);
+}
+
+.content-reveal-fadeDown.content-reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===========================
+   FADE LEFT ANIMATION
+   =========================== */
+
+.content-reveal-fadeLeft {
+  transform: translateX(30px);
+}
+
+.content-reveal-fadeLeft.content-reveal-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ===========================
+   FADE RIGHT ANIMATION
+   =========================== */
+
+.content-reveal-fadeRight {
+  transform: translateX(-30px);
+}
+
+.content-reveal-fadeRight.content-reveal-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ===========================
+   SCALE ANIMATION
+   =========================== */
+
+.content-reveal-scale {
+  transform: scale(0.8);
+}
+
+.content-reveal-scale.content-reveal-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ===========================
+   ACCESSIBILITY
+   =========================== */
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .content-reveal,
+  .content-reveal-item {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    transform: none !important;
+  }
+  
+  .content-reveal-visible {
+    opacity: 1 !important;
+  }
+}

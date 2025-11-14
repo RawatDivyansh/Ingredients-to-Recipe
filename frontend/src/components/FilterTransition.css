@@ -1,0 +1,65 @@
+/* FilterTransition Component Styles */
+
+.filter-transition-group {
+  position: relative;
+}
+
+.filter-transition-item {
+  transition: all 400ms cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* ===========================
+   FILTER TRANSITION ANIMATIONS
+   =========================== */
+
+/* Enter */
+.filter-transition-enter {
+  opacity: 0;
+  transform: scale(0.9) translateY(20px);
+}
+
+.filter-transition-enter-active {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  transition: opacity 400ms cubic-bezier(0.4, 0.0, 0.2, 1),
+              transform 400ms cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* Exit */
+.filter-transition-exit {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.filter-transition-exit-active {
+  opacity: 0;
+  transform: scale(0.9) translateY(-20px);
+  transition: opacity 400ms cubic-bezier(0.4, 0.0, 0.2, 1),
+              transform 400ms cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* ===========================
+   GRID LAYOUT SUPPORT
+   =========================== */
+
+/* Smooth position changes for grid items */
+.filter-transition-item {
+  position: relative;
+}
+
+/* ===========================
+   ACCESSIBILITY
+   =========================== */
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .filter-transition-enter-active,
+  .filter-transition-exit-active {
+    transition-duration: 0.01ms !important;
+  }
+  
+  .filter-transition-enter,
+  .filter-transition-exit {
+    transform: none !important;
+  }
+}

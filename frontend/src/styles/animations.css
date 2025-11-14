@@ -1,0 +1,403 @@
+/* Animation Utility Classes */
+
+/* Import keyframes */
+@import './keyframes.css';
+
+/* Base Animation Classes */
+.animate-fade-in {
+  animation: fadeIn var(--duration-normal) var(--ease-default);
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp var(--duration-normal) var(--ease-default);
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown var(--duration-normal) var(--ease-default);
+}
+
+.animate-fade-out {
+  animation: fadeOut var(--duration-normal) var(--ease-default);
+}
+
+.animate-bounce-in {
+  animation: bounceIn var(--duration-slow) var(--ease-bounce);
+}
+
+.animate-bounce-out {
+  animation: bounceOut var(--duration-normal) var(--ease-default);
+}
+
+.animate-scale-in {
+  animation: scaleIn var(--duration-normal) var(--ease-default);
+}
+
+.animate-scale-out {
+  animation: scaleOut var(--duration-normal) var(--ease-default);
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft var(--duration-normal) var(--ease-default);
+}
+
+.animate-slide-in-right {
+  animation: slideInRight var(--duration-normal) var(--ease-default);
+}
+
+.animate-slide-in-up {
+  animation: slideInUp var(--duration-normal) var(--ease-default);
+}
+
+.animate-slide-in-down {
+  animation: slideInDown var(--duration-normal) var(--ease-default);
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite linear;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite var(--ease-default);
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s infinite var(--ease-default);
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite var(--ease-default);
+}
+
+.animate-float {
+  animation: float 3s infinite var(--ease-in-out);
+}
+
+.animate-float-subtle {
+  animation: floatSubtle 3s infinite var(--ease-in-out);
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradientShift 3s infinite var(--ease-in-out);
+}
+
+.animate-rotate {
+  animation: rotate 1s linear infinite;
+}
+
+.animate-shake {
+  animation: shake 0.5s var(--ease-default);
+}
+
+.animate-wiggle {
+  animation: wiggle 0.5s var(--ease-default);
+}
+
+.animate-glow {
+  animation: glow 2s infinite var(--ease-in-out);
+}
+
+.animate-heartbeat {
+  animation: heartbeat 1.5s infinite var(--ease-default);
+}
+
+.animate-swing {
+  animation: swing 1s var(--ease-in-out);
+}
+
+.animate-flash {
+  animation: flash 1s var(--ease-default);
+}
+
+.animate-zoom-in {
+  animation: zoomIn var(--duration-normal) var(--ease-default);
+}
+
+.animate-zoom-out {
+  animation: zoomOut var(--duration-normal) var(--ease-default);
+}
+
+/* Animation Duration Modifiers */
+.animate-fast {
+  animation-duration: var(--duration-fast) !important;
+}
+
+.animate-normal {
+  animation-duration: var(--duration-normal) !important;
+}
+
+.animate-slow {
+  animation-duration: var(--duration-slow) !important;
+}
+
+.animate-slower {
+  animation-duration: var(--duration-slower) !important;
+}
+
+/* Animation Delay Utilities */
+.animate-delay-100 {
+  animation-delay: 100ms;
+}
+
+.animate-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animate-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animate-delay-500 {
+  animation-delay: 500ms;
+}
+
+.animate-delay-700 {
+  animation-delay: 700ms;
+}
+
+.animate-delay-1000 {
+  animation-delay: 1000ms;
+}
+
+/* Transition Utilities */
+.transition-all {
+  transition: all var(--duration-normal) var(--ease-default);
+}
+
+.transition-colors {
+  transition: color var(--duration-normal) var(--ease-default),
+              background-color var(--duration-normal) var(--ease-default),
+              border-color var(--duration-normal) var(--ease-default);
+}
+
+.transition-opacity {
+  transition: opacity var(--duration-normal) var(--ease-default);
+}
+
+.transition-transform {
+  transition: transform var(--duration-normal) var(--ease-default);
+}
+
+.transition-shadow {
+  transition: box-shadow var(--duration-normal) var(--ease-default);
+}
+
+.transition-fast {
+  transition-duration: var(--duration-fast) !important;
+}
+
+.transition-slow {
+  transition-duration: var(--duration-slow) !important;
+}
+
+/* Hover Effects */
+.hover-lift {
+  transition: transform var(--duration-normal) var(--ease-default),
+              box-shadow var(--duration-normal) var(--ease-default);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.hover-lift-lg {
+  transition: transform var(--duration-normal) var(--ease-default),
+              box-shadow var(--duration-normal) var(--ease-default);
+}
+
+.hover-lift-lg:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+}
+
+.hover-scale {
+  transition: transform var(--duration-normal) var(--ease-default);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-scale-sm {
+  transition: transform var(--duration-normal) var(--ease-default);
+}
+
+.hover-scale-sm:hover {
+  transform: scale(1.02);
+}
+
+.hover-glow {
+  transition: box-shadow var(--duration-normal) var(--ease-default);
+}
+
+.hover-glow:hover {
+  box-shadow: var(--shadow-glow);
+}
+
+.hover-brightness {
+  transition: filter var(--duration-normal) var(--ease-default);
+}
+
+.hover-brightness:hover {
+  filter: brightness(1.1);
+}
+
+/* Focus Effects */
+.focus-glow:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.3);
+}
+
+.focus-ring:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Active/Press Effects */
+.active-press:active {
+  transform: scale(0.95);
+}
+
+.active-press-sm:active {
+  transform: scale(0.98);
+}
+
+/* Stagger Animation Utilities */
+.stagger-children > * {
+  animation: fadeInUp var(--duration-normal) var(--ease-default);
+  animation-fill-mode: both;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 100ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 200ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 300ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 400ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 500ms; }
+.stagger-children > *:nth-child(7) { animation-delay: 600ms; }
+.stagger-children > *:nth-child(8) { animation-delay: 700ms; }
+.stagger-children > *:nth-child(9) { animation-delay: 800ms; }
+.stagger-children > *:nth-child(10) { animation-delay: 900ms; }
+
+/* Performance Optimization */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.will-change-auto {
+  will-change: auto;
+}
+
+/* GPU Acceleration */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Skeleton Loading */
+.skeleton {
+  background: var(--gradient-shimmer);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+  border-radius: var(--radius-md);
+}
+
+.skeleton-text {
+  height: 1em;
+  margin-bottom: 0.5em;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-circle {
+  border-radius: 50%;
+}
+
+/* Loading Spinner */
+.spinner {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(39, 174, 96, 0.1);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: rotate 1s linear infinite;
+}
+
+.spinner-sm {
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
+}
+
+.spinner-lg {
+  width: 60px;
+  height: 60px;
+  border-width: 6px;
+}
+
+/* Ripple Effect Container */
+.ripple-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+}
+
+/* Accessibility: Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .animate-shimmer,
+  .animate-pulse,
+  .animate-pulse-glow,
+  .animate-bounce,
+  .animate-float,
+  .animate-float-subtle,
+  .animate-gradient-shift,
+  .animate-rotate,
+  .animate-glow,
+  .animate-heartbeat,
+  .animate-swing {
+    animation: none !important;
+  }
+  
+  .skeleton {
+    animation: none !important;
+    background: var(--color-neutral-light);
+  }
+  
+  .spinner {
+    animation: none !important;
+    border-top-color: transparent;
+  }
+}
+
+/* Print Styles - Disable animations */
+@media print {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

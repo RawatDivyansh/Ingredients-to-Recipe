@@ -1,0 +1,132 @@
+/* Animated Ingredient Tag Component */
+
+.animated-ingredient-tag {
+  display: inline-flex;
+  align-items: center;
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  
+  /* Shadow effects for depth */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15),
+              0 1px 3px rgba(0, 0, 0, 0.1);
+  
+  /* Smooth transitions */
+  transition: transform var(--duration-normal) var(--ease-default),
+              box-shadow var(--duration-normal) var(--ease-default);
+  
+  /* Bounce-in animation when tag is added */
+  animation: bounceIn var(--duration-slow) var(--ease-bounce);
+  animation-fill-mode: both;
+}
+
+/* Hover effect */
+.animated-ingredient-tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2),
+              0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Hover effect revealing delete button with fade-in */
+.animated-ingredient-tag .tag-remove-button {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity var(--duration-fast) var(--ease-default),
+              transform var(--duration-fast) var(--ease-default),
+              background-color var(--duration-fast) var(--ease-default);
+}
+
+.animated-ingredient-tag:hover .tag-remove-button {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Ingredient name */
+.tag-ingredient-name {
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Remove button */
+.tag-remove-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.tag-remove-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.tag-remove-button:focus {
+  outline: 2px solid white;
+  outline-offset: 2px;
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Scale-out and fade animation for removal */
+.animated-ingredient-tag.removing {
+  animation: scaleOut var(--duration-normal) var(--ease-default) forwards;
+}
+
+/* Accessibility: Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .animated-ingredient-tag {
+    animation: none;
+    transition: none;
+  }
+  
+  .animated-ingredient-tag.removing {
+    animation: none;
+    opacity: 0;
+  }
+  
+  .animated-ingredient-tag .tag-remove-button {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Mobile Responsive (320-767px) */
+@media (max-width: 767px) {
+  .animated-ingredient-tag {
+    padding: 0.625rem 0.875rem;
+    min-height: 48px; /* Touch-friendly */
+    font-size: 1rem;
+    gap: 0.625rem;
+  }
+
+  /* Always show remove button on mobile for better UX */
+  .animated-ingredient-tag .tag-remove-button {
+    opacity: 1;
+    transform: scale(1);
+    width: 28px;
+    height: 28px;
+    font-size: 1.5rem;
+    min-width: 44px; /* Touch-friendly tap area */
+    min-height: 44px;
+    margin: -8px -8px -8px 0; /* Negative margin to maintain visual size */
+  }
+}
+
+/* Tablet (768-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .animated-ingredient-tag {
+    font-size: 1rem;
+  }
+}

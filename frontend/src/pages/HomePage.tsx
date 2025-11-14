@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import IngredientInput from '../components/IngredientInput';
 import SelectedIngredientsList from '../components/SelectedIngredientsList';
 import PopularRecipes from '../components/PopularRecipes';
+import HeroSection from '../components/HeroSection';
 import { ErrorMessage } from '../components';
 import { validateIngredients } from '../utils/validators';
 import './HomePage.css';
@@ -40,10 +41,11 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="home-page">
-      <div className="home-header">
-        <h1>Find Recipes from Your Ingredients</h1>
-        <p>Enter the ingredients you have and discover delicious recipes!</p>
-      </div>
+      <HeroSection 
+        title="Find Recipes from Your Ingredients"
+        subtitle="Enter the ingredients you have and discover delicious recipes!"
+        animated={true}
+      />
 
       <div className="ingredient-section">
         {error && <ErrorMessage message={error} onDismiss={() => setError(null)} />}
@@ -57,7 +59,9 @@ const HomePage: React.FC = () => {
 
         <div className="get-recipes-section">
           <button className="btn-get-recipes" onClick={handleGetRecipes}>
-            Get Recipes {selectedIngredients.length > 0 && `(${selectedIngredients.length} ingredient${selectedIngredients.length !== 1 ? 's' : ''})`}
+            <span>
+              Get Recipes {selectedIngredients.length > 0 && `(${selectedIngredients.length} ingredient${selectedIngredients.length !== 1 ? 's' : ''})`}
+            </span>
           </button>
         </div>
       </div>

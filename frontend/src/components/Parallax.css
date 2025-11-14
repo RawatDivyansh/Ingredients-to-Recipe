@@ -1,0 +1,22 @@
+/* Parallax Component Styles */
+
+.parallax {
+  transition: transform 0.1s ease-out;
+}
+
+/* Disable parallax on mobile for better performance */
+@media (max-width: 768px) {
+  .parallax {
+    transform: none !important;
+    will-change: auto !important;
+  }
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .parallax {
+    transform: none !important;
+    will-change: auto !important;
+    transition: none !important;
+  }
+}

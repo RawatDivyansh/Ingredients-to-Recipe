@@ -1,0 +1,136 @@
+/* Design System Variables */
+
+:root {
+  /* Color Palette */
+  --color-primary: #27ae60;
+  --color-primary-dark: #229954;
+  --color-primary-light: #2ecc71;
+  
+  --color-secondary: #3498db;
+  --color-secondary-dark: #2980b9;
+  --color-secondary-light: #5dade2;
+  
+  --color-accent: #e74c3c;
+  --color-accent-dark: #c0392b;
+  --color-accent-light: #ec7063;
+  
+  --color-neutral-dark: #2c3e50;
+  --color-neutral-mid: #7f8c8d;
+  --color-neutral-light: #ecf0f1;
+  --color-neutral-lighter: #f8f9fa;
+  
+  --color-background: #ffffff;
+  --color-surface: #ffffff;
+  --color-text-primary: #2c3e50;
+  --color-text-secondary: #7f8c8d;
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+  --gradient-secondary: linear-gradient(135deg, #3498db 0%, #5dade2 100%);
+  --gradient-accent: linear-gradient(135deg, #e74c3c 0%, #ec7063 100%);
+  --gradient-hero: linear-gradient(135deg, #27ae60 0%, #3498db 50%, #2ecc71 100%);
+  --gradient-shimmer: linear-gradient(90deg, #f0f0f0 0px, #f8f8f8 40px, #f0f0f0 80px);
+  
+  /* Category Gradients */
+  --gradient-protein: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  --gradient-vegetable: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+  --gradient-grain: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+  --gradient-dairy: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  --gradient-spice: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+  --gradient-default: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+  
+  /* Typography Scale */
+  --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-family-mono: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  
+  --font-size-hero: 3rem;        /* 48px */
+  --font-size-h1: 2.5rem;        /* 40px */
+  --font-size-h2: 2rem;          /* 32px */
+  --font-size-h3: 1.5rem;        /* 24px */
+  --font-size-body: 1rem;        /* 16px */
+  --font-size-small: 0.875rem;  /* 14px */
+  --font-size-tiny: 0.75rem;    /* 12px */
+  
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  
+  /* Spacing System */
+  --spacing-xs: 0.25rem;   /* 4px */
+  --spacing-sm: 0.5rem;    /* 8px */
+  --spacing-md: 1rem;      /* 16px */
+  --spacing-lg: 1.5rem;    /* 24px */
+  --spacing-xl: 2rem;      /* 32px */
+  --spacing-2xl: 3rem;     /* 48px */
+  --spacing-3xl: 4rem;     /* 64px */
+  
+  /* Border Radius */
+  --radius-sm: 0.25rem;    /* 4px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 1rem;       /* 16px */
+  --radius-xl: 1.5rem;     /* 24px */
+  --radius-full: 9999px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 20px rgba(39, 174, 96, 0.3);
+  --shadow-glow-secondary: 0 0 20px rgba(52, 152, 219, 0.3);
+  
+  /* Animation Timing */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-slower: 800ms;
+  
+  /* Animation Easing */
+  --ease-default: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0.0, 1, 1);
+  --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-elastic: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  
+  /* Z-index Scale */
+  --z-base: 0;
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  
+  /* Breakpoints (for reference in JS) */
+  --breakpoint-mobile: 640px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1024px;
+  --breakpoint-wide: 1280px;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+  :root {
+    --font-size-hero: 2rem;      /* 32px */
+    --font-size-h1: 1.75rem;     /* 28px */
+    --font-size-h2: 1.5rem;      /* 24px */
+    --font-size-h3: 1.25rem;     /* 20px */
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --font-size-hero: 1.75rem;   /* 28px */
+    --font-size-h1: 1.5rem;      /* 24px */
+    --font-size-h2: 1.25rem;     /* 20px */
+    --font-size-h3: 1.125rem;    /* 18px */
+  }
+}
