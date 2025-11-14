@@ -1,0 +1,19 @@
+/* Animated Counter Component Styles */
+
+.animated-counter {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+  transition: color var(--duration-normal) var(--ease-default);
+}
+
+.animated-counter--animating {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .animated-counter {
+    transition: none !important;
+  }
+}

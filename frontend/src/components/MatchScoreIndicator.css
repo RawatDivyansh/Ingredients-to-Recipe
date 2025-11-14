@@ -1,0 +1,159 @@
+/* Match Score Indicator Component Styles */
+
+.match-score-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/* Circular Type */
+.match-score-indicator--circular {
+  position: relative;
+  display: inline-block;
+}
+
+.match-score-indicator--circular svg {
+  transform: rotate(-90deg);
+}
+
+.match-score-indicator__background {
+  color: var(--color-neutral-light);
+}
+
+.match-score-indicator__progress {
+  transition: stroke-dashoffset var(--duration-slower) var(--ease-default);
+}
+
+.match-score-indicator__value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-small);
+}
+
+/* Circular Size Variants */
+.match-score-indicator--circular.match-score-indicator--small .match-score-indicator__value {
+  font-size: var(--font-size-tiny);
+}
+
+.match-score-indicator--circular.match-score-indicator--large .match-score-indicator__value {
+  font-size: var(--font-size-body);
+}
+
+/* Linear Type */
+.match-score-indicator--linear {
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+}
+
+.match-score-indicator__track {
+  width: 100%;
+  height: 8px;
+  background: var(--color-neutral-light);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.match-score-indicator__fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width var(--duration-slower) var(--ease-default);
+  position: relative;
+  overflow: hidden;
+}
+
+.match-score-indicator__fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+.match-score-indicator__label {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-semibold);
+  text-align: center;
+  margin-top: var(--spacing-xs);
+}
+
+/* Linear Size Variants */
+.match-score-indicator--linear.match-score-indicator--small .match-score-indicator__track {
+  height: 6px;
+}
+
+.match-score-indicator--linear.match-score-indicator--small .match-score-indicator__label {
+  font-size: var(--font-size-tiny);
+}
+
+.match-score-indicator--linear.match-score-indicator--large .match-score-indicator__track {
+  height: 12px;
+}
+
+.match-score-indicator--linear.match-score-indicator--large .match-score-indicator__label {
+  font-size: var(--font-size-body);
+}
+
+/* Color Variants */
+.match-score-indicator--excellent .match-score-indicator__progress,
+.match-score-indicator--excellent .match-score-indicator__fill {
+  color: var(--color-primary);
+  background: var(--gradient-primary);
+}
+
+.match-score-indicator--excellent .match-score-indicator__value,
+.match-score-indicator--excellent .match-score-indicator__label {
+  color: var(--color-primary);
+}
+
+.match-score-indicator--great .match-score-indicator__progress,
+.match-score-indicator--great .match-score-indicator__fill {
+  color: var(--color-secondary);
+  background: var(--gradient-secondary);
+}
+
+.match-score-indicator--great .match-score-indicator__value,
+.match-score-indicator--great .match-score-indicator__label {
+  color: var(--color-secondary);
+}
+
+.match-score-indicator--good .match-score-indicator__progress,
+.match-score-indicator--good .match-score-indicator__fill {
+  color: #f39c12;
+  background: var(--gradient-grain);
+}
+
+.match-score-indicator--good .match-score-indicator__value,
+.match-score-indicator--good .match-score-indicator__label {
+  color: #f39c12;
+}
+
+.match-score-indicator--fair .match-score-indicator__progress,
+.match-score-indicator--fair .match-score-indicator__fill {
+  color: var(--color-neutral-mid);
+  background: var(--gradient-default);
+}
+
+.match-score-indicator--fair .match-score-indicator__value,
+.match-score-indicator--fair .match-score-indicator__label {
+  color: var(--color-neutral-mid);
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .match-score-indicator__progress,
+  .match-score-indicator__fill {
+    transition: none !important;
+  }
+
+  .match-score-indicator__fill::after {
+    animation: none !important;
+  }
+}

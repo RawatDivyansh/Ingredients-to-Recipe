@@ -1,0 +1,100 @@
+/* Success Feedback Component Styles */
+
+.success-feedback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  animation: scaleIn var(--duration-normal) var(--ease-bounce);
+}
+
+.success-feedback--exiting {
+  animation: fadeOut var(--duration-normal) var(--ease-default);
+}
+
+.success-feedback__checkmark-container {
+  position: relative;
+}
+
+.success-feedback__checkmark {
+  width: 80px;
+  height: 80px;
+}
+
+.success-feedback__checkmark-circle {
+  stroke: var(--color-primary);
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  animation: checkmarkCircle 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.success-feedback__checkmark-check {
+  stroke: var(--color-primary);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: checkmarkCheck 0.3s 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.success-feedback__message {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+  text-align: center;
+}
+
+/* Size Variants */
+.success-feedback--small .success-feedback__checkmark {
+  width: 48px;
+  height: 48px;
+}
+
+.success-feedback--small .success-feedback__message {
+  font-size: var(--font-size-small);
+}
+
+.success-feedback--large .success-feedback__checkmark {
+  width: 120px;
+  height: 120px;
+}
+
+.success-feedback--large .success-feedback__message {
+  font-size: var(--font-size-h3);
+}
+
+/* Checkmark Animations */
+@keyframes checkmarkCircle {
+  0% {
+    stroke-dashoffset: 166;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes checkmarkCheck {
+  0% {
+    stroke-dashoffset: 48;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .success-feedback,
+  .success-feedback__checkmark-circle,
+  .success-feedback__checkmark-check {
+    animation: none !important;
+  }
+
+  .success-feedback__checkmark-circle,
+  .success-feedback__checkmark-check {
+    stroke-dashoffset: 0;
+  }
+}

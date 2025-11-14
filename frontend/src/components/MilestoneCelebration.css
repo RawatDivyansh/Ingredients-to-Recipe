@@ -1,0 +1,134 @@
+/* Milestone Celebration Component Styles */
+
+.milestone-celebration {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: var(--z-modal);
+  pointer-events: none;
+  animation: scaleIn var(--duration-normal) var(--ease-bounce);
+}
+
+.milestone-celebration--exiting {
+  animation: scaleOut var(--duration-normal) var(--ease-default);
+}
+
+.milestone-celebration__content {
+  background: white;
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  min-width: 300px;
+  max-width: 400px;
+}
+
+.milestone-celebration__icon {
+  font-size: 4rem;
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.milestone-celebration__message {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+.milestone-celebration--success .milestone-celebration__content {
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+  color: white;
+}
+
+.milestone-celebration--success .milestone-celebration__message {
+  color: white;
+}
+
+.milestone-celebration--achievement .milestone-celebration__content {
+  background: linear-gradient(135deg, #3498db 0%, #5dade2 100%);
+  color: white;
+}
+
+.milestone-celebration--achievement .milestone-celebration__message {
+  color: white;
+}
+
+/* Confetti Animation */
+.milestone-celebration__confetti {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.milestone-celebration__confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: var(--color-primary);
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  animation: confettiFall 2s ease-out forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+.milestone-celebration__confetti-piece:nth-child(1) { background: #e74c3c; transform: rotate(45deg); }
+.milestone-celebration__confetti-piece:nth-child(2) { background: #3498db; transform: rotate(90deg); }
+.milestone-celebration__confetti-piece:nth-child(3) { background: #f39c12; transform: rotate(135deg); }
+.milestone-celebration__confetti-piece:nth-child(4) { background: #27ae60; transform: rotate(180deg); }
+.milestone-celebration__confetti-piece:nth-child(5) { background: #9b59b6; transform: rotate(225deg); }
+.milestone-celebration__confetti-piece:nth-child(6) { background: #e74c3c; transform: rotate(270deg); }
+.milestone-celebration__confetti-piece:nth-child(7) { background: #3498db; transform: rotate(315deg); }
+.milestone-celebration__confetti-piece:nth-child(8) { background: #f39c12; transform: rotate(360deg); }
+.milestone-celebration__confetti-piece:nth-child(9) { background: #27ae60; transform: rotate(405deg); }
+.milestone-celebration__confetti-piece:nth-child(10) { background: #9b59b6; transform: rotate(450deg); }
+.milestone-celebration__confetti-piece:nth-child(11) { background: #e74c3c; transform: rotate(495deg); }
+.milestone-celebration__confetti-piece:nth-child(12) { background: #3498db; transform: rotate(540deg); }
+
+@keyframes confettiFall {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--delay, 0s) * 100px - 50px), 200px) rotate(720deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .milestone-celebration__content {
+    min-width: 250px;
+    max-width: 90vw;
+    padding: var(--spacing-lg);
+  }
+
+  .milestone-celebration__icon {
+    font-size: 3rem;
+  }
+
+  .milestone-celebration__message {
+    font-size: var(--font-size-h3);
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .milestone-celebration,
+  .milestone-celebration__icon,
+  .milestone-celebration__confetti-piece {
+    animation: none !important;
+  }
+
+  .milestone-celebration {
+    opacity: 1;
+  }
+}

@@ -401,3 +401,57 @@
     transition: none !important;
   }
 }
+
+/* Low Performance Mode - Reduce animation complexity */
+.low-performance * {
+  animation-duration: 0.1s !important;
+  transition-duration: 0.1s !important;
+}
+
+.low-performance .animate-shimmer,
+.low-performance .animate-pulse,
+.low-performance .animate-pulse-glow,
+.low-performance .animate-bounce,
+.low-performance .animate-float,
+.low-performance .animate-float-subtle,
+.low-performance .animate-gradient-shift,
+.low-performance .animate-glow,
+.low-performance .animate-heartbeat {
+  animation: none !important;
+}
+
+.low-performance .skeleton {
+  animation: none !important;
+  background: var(--color-neutral-light);
+}
+
+.low-performance .hover-lift:hover,
+.low-performance .hover-lift-lg:hover {
+  transform: none !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+.low-performance .hover-scale:hover,
+.low-performance .hover-scale-sm:hover {
+  transform: none !important;
+}
+
+/* Reduced Animations Mode - For low-end devices */
+.reduced-animations * {
+  animation-duration: 0.05s !important;
+  transition-duration: 0.05s !important;
+}
+
+.reduced-animations .animate-shimmer,
+.reduced-animations .animate-pulse,
+.reduced-animations .animate-pulse-glow,
+.reduced-animations .animate-bounce,
+.reduced-animations .animate-float,
+.reduced-animations .animate-float-subtle,
+.reduced-animations .animate-gradient-shift,
+.reduced-animations .animate-rotate,
+.reduced-animations .animate-glow,
+.reduced-animations .animate-heartbeat,
+.reduced-animations .animate-swing {
+  animation: none !important;
+}

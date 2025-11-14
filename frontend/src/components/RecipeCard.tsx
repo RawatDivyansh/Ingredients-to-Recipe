@@ -74,7 +74,7 @@ const RecipeCard: React.FC<RecipeCardProps> = memo(({
 
   return (
     <div 
-      className="recipe-card" 
+      className="recipe-card touch-feedback" 
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -173,7 +173,7 @@ const RecipeCard: React.FC<RecipeCardProps> = memo(({
         <div className={`recipe-card-quick-actions ${isHovered ? 'visible' : ''}`}>
           {onSave && (
             <button 
-              className="quick-action-btn save-btn"
+              className="quick-action-btn save-btn touch-target touch-ripple"
               onClick={handleSave}
               aria-label="Save recipe"
               title="Save recipe"
@@ -183,7 +183,7 @@ const RecipeCard: React.FC<RecipeCardProps> = memo(({
           )}
           {onShare && (
             <button 
-              className="quick-action-btn share-btn"
+              className="quick-action-btn share-btn touch-target touch-ripple"
               onClick={handleShare}
               aria-label="Share recipe"
               title="Share recipe"

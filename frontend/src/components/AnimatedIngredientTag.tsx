@@ -60,7 +60,7 @@ const AnimatedIngredientTag: React.FC<AnimatedIngredientTagProps> = ({
 
   return (
     <div
-      className="animated-ingredient-tag"
+      className="animated-ingredient-tag touch-feedback"
       style={{
         background: gradient,
         animationDelay: `${index * 50}ms`,
@@ -68,7 +68,7 @@ const AnimatedIngredientTag: React.FC<AnimatedIngredientTagProps> = ({
     >
       <span className="tag-ingredient-name">{ingredient}</span>
       <button
-        className="tag-remove-button"
+        className="tag-remove-button touch-target"
         onClick={() => onRemove(ingredient)}
         aria-label={`Remove ${ingredient}`}
         type="button"

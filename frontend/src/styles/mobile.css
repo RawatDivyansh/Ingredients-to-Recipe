@@ -1,0 +1,705 @@
+/*
+ * Mobile-Specific Optimizations
+ * Touch interactions, haptic-style feedback, and mobile performance
+ */
+
+/* ============================================
+   TOUCH TARGET OPTIMIZATION
+   ============================================ */
+
+/* Ensure minimum 44px touch targets for all interactive elements */
+@media (max-width: 767px) {
+  /* Buttons */
+  button,
+  .btn,
+  .button,
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 12px 16px;
+  }
+
+  /* Links */
+  a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Input fields */
+  input,
+  textarea,
+  select {
+    min-height: 44px;
+    padding: 12px 16px;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  /* Checkbox and radio buttons */
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-width: 24px;
+    min-height: 24px;
+    margin: 10px; /* Adds padding around for easier touch */
+  }
+
+  /* Icon buttons */
+  .icon-button,
+  .quick-action-btn {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px;
+  }
+
+  /* Tag remove buttons */
+  .tag-remove-button,
+  .animated-ingredient-tag button {
+    min-width: 32px;
+    min-height: 32px;
+    padding: 6px;
+    margin-left: 4px;
+  }
+
+  /* Ensure parent container provides adequate touch area */
+  .animated-ingredient-tag {
+    padding: 8px 12px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* ============================================
+   TOUCH INTERACTION FEEDBACK
+   ============================================ */
+
+@media (max-width: 767px) {
+  /* Haptic-style visual feedback for touch */
+  .touch-feedback {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Active state with press-down effect */
+  button:active,
+  .btn:active,
+  .touch-feedback:active {
+    transform: scale(0.96);
+    transition: transform 100ms cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+
+  /* Ripple effect for touch feedback */
+  .touch-ripple {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .touch-ripple::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s;
+  }
+
+  .touch-ripple:active::after {
+    width: 200px;
+    height: 200px;
+  }
+
+  /* Flash feedback for selections */
+  .touch-flash:active {
+    background-color: rgba(39, 174, 96, 0.1);
+    transition: background-color 150ms ease-out;
+  }
+
+  /* Glow feedback for important actions */
+  .touch-glow:active {
+    box-shadow: 0 0 20px rgba(39, 174, 96, 0.4);
+    transition: box-shadow 150ms ease-out;
+  }
+
+  /* Scale feedback for cards */
+  .recipe-card:active,
+  .card:active {
+    transform: scale(0.98);
+    transition: transform 120ms cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+
+  /* Ingredient tag touch feedback */
+  .animated-ingredient-tag:active {
+    transform: scale(0.95);
+    transition: transform 100ms ease-out;
+  }
+
+  /* Button press feedback */
+  .ingredient-input-wrapper button:active,
+  .quick-action-btn:active {
+    transform: scale(0.9);
+    opacity: 0.8;
+    transition: transform 100ms ease-out, opacity 100ms ease-out;
+  }
+}
+
+/* ============================================
+   MOBILE ANIMATION TIMING ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 767px) {
+  /* Faster animations for touch interactions */
+  :root {
+    --duration-fast: 100ms;
+    --duration-normal: 200ms;
+    --duration-slow: 350ms;
+    --duration-slower: 500ms;
+  }
+
+  /* Reduce animation complexity */
+  .animate-bounce-in {
+    animation: fadeInUp var(--duration-normal) var(--ease-default);
+  }
+
+  .animate-float,
+  .animate-float-subtle {
+    animation: none; /* Disable floating animations on mobile */
+  }
+
+  /* Simplify hover effects to tap effects */
+  .hover-lift:active {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .hover-scale:active {
+    transform: scale(1.02);
+  }
+
+  /* Faster transitions */
+  .transition-all,
+  .transition-transform,
+  .transition-colors {
+    transition-duration: var(--duration-fast);
+  }
+
+  /* Reduce stagger delays */
+  .stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+  .stagger-children > *:nth-child(2) { animation-delay: 50ms; }
+  .stagger-children > *:nth-child(3) { animation-delay: 100ms; }
+  .stagger-children > *:nth-child(4) { animation-delay: 150ms; }
+  .stagger-children > *:nth-child(5) { animation-delay: 200ms; }
+  .stagger-children > *:nth-child(n+6) { animation-delay: 250ms; }
+}
+
+/* ============================================
+   MOBILE-SPECIFIC COMPONENT ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 767px) {
+  /* Recipe cards - larger touch targets */
+  .recipe-card {
+    padding: 16px;
+    min-height: 120px;
+  }
+
+  .recipe-card-quick-actions {
+    /* Always visible on mobile, no hover needed */
+    opacity: 1;
+    transform: translateY(0);
+    position: relative;
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  .recipe-card-quick-actions .quick-action-btn {
+    flex: 1;
+    max-width: 120px;
+  }
+
+  /* Ingredient input - larger touch area */
+  .ingredient-input {
+    min-height: 48px;
+    font-size: 16px;
+    padding: 14px 16px;
+  }
+
+  /* Ingredient suggestions - larger touch targets */
+  .ingredient-suggestion-item {
+    min-height: 48px;
+    padding: 14px 16px;
+    font-size: 16px;
+  }
+
+  /* Filter panel - easier to tap */
+  .filter-option,
+  .filter-checkbox-label {
+    min-height: 48px;
+    padding: 12px 16px;
+  }
+
+  /* Tooltips - tap to show/hide */
+  .animated-tooltip {
+    pointer-events: auto;
+  }
+
+  /* Modal close buttons */
+  .modal-close,
+  .dialog-close {
+    min-width: 48px;
+    min-height: 48px;
+    padding: 12px;
+  }
+
+  /* Navigation items */
+  nav a,
+  .nav-link {
+    min-height: 48px;
+    padding: 12px 16px;
+  }
+}
+
+/* ============================================
+   TOUCH-SPECIFIC INTERACTION STATES
+   ============================================ */
+
+@media (max-width: 767px) {
+  /* Remove hover states on mobile */
+  .hover-lift:hover,
+  .hover-scale:hover,
+  .hover-glow:hover,
+  .hover-brightness:hover {
+    transform: none;
+    box-shadow: none;
+    filter: none;
+  }
+
+  /* Replace with active states */
+  .hover-lift:active {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .hover-scale:active {
+    transform: scale(1.02);
+  }
+
+  .hover-glow:active {
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Disable hover-triggered animations */
+  .recipe-card:hover .recipe-card-image {
+    transform: none;
+  }
+
+  .recipe-card:active .recipe-card-image {
+    transform: scale(1.02);
+  }
+}
+
+/* ============================================
+   MOBILE PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+@media (max-width: 767px) {
+  /* Reduce shadow complexity */
+  .shadow-xl {
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Simplify gradients */
+  .animate-gradient-shift {
+    animation: none;
+    background: var(--color-primary);
+  }
+
+  /* Disable parallax on mobile */
+  .parallax,
+  [data-parallax] {
+    transform: none !important;
+  }
+
+  /* Reduce blur effects */
+  .backdrop-blur {
+    backdrop-filter: none;
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+
+  /* Optimize shimmer animation */
+  .skeleton {
+    animation-duration: 1.5s;
+  }
+
+  /* Reduce transform complexity */
+  .will-change-transform {
+    will-change: auto;
+  }
+
+  /* Optimize image rendering */
+  img {
+    image-rendering: -webkit-optimize-contrast;
+  }
+
+  /* Use CSS containment for better performance */
+  .recipe-card,
+  .animated-ingredient-tag,
+  .filter-panel,
+  .collapsible-section {
+    contain: layout style paint;
+  }
+
+  /* Optimize repaints */
+  .recipe-card-image,
+  .hero-section,
+  .animated-ingredient-tag {
+    will-change: auto;
+  }
+
+  /* Reduce animation iterations */
+  .animate-pulse,
+  .animate-pulse-glow,
+  .animate-heartbeat {
+    animation-iteration-count: 3;
+  }
+
+  /* Simplify complex animations */
+  .animate-bounce-in {
+    animation: fadeIn var(--duration-fast) ease-out;
+  }
+
+  .animate-bounce-out {
+    animation: fadeOut var(--duration-fast) ease-out;
+  }
+
+  /* Disable expensive filters */
+  .hover-brightness:hover {
+    filter: none;
+  }
+
+  /* Optimize scroll performance */
+  .scrollable {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: auto; /* Disable smooth scroll on mobile for performance */
+  }
+
+  /* Reduce box-shadow layers */
+  .recipe-card:hover,
+  .recipe-card:active {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Simplify gradient backgrounds */
+  .hero-section,
+  [class*="gradient-"] {
+    background-attachment: scroll; /* Disable fixed backgrounds */
+  }
+
+  /* Optimize text rendering */
+  body {
+    text-rendering: optimizeSpeed;
+  }
+
+  /* Reduce composite layers */
+  * {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+}
+
+/* ============================================
+   MOBILE GESTURE SUPPORT
+   ============================================ */
+
+@media (max-width: 767px) {
+  /* Prevent text selection during swipe */
+  .swipeable {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+
+  /* Smooth scrolling */
+  .scrollable {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Pull-to-refresh indicator space */
+  body {
+    overscroll-behavior-y: contain;
+  }
+
+  /* Prevent zoom on double-tap */
+  * {
+    touch-action: manipulation;
+  }
+
+  /* Allow pinch-zoom on images */
+  img,
+  .zoomable {
+    touch-action: pinch-zoom;
+  }
+}
+
+/* ============================================
+   MOBILE ACCESSIBILITY
+   ============================================ */
+
+@media (max-width: 767px) {
+  /* Larger focus indicators for touch */
+  *:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  /* Ensure sufficient contrast for touch targets */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible {
+    box-shadow: 0 0 0 4px rgba(39, 174, 96, 0.3);
+  }
+
+  /* Skip to content link for mobile */
+  .skip-to-content {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    background: var(--color-primary);
+    color: white;
+    padding: 12px 20px;
+    min-height: 48px;
+    z-index: 9999;
+  }
+
+  .skip-to-content:focus {
+    top: 0;
+  }
+}
+
+/* ============================================
+   MOBILE-SPECIFIC UTILITIES
+   ============================================ */
+
+@media (max-width: 767px) {
+  /* Touch-friendly spacing */
+  .touch-spacing {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  /* Mobile-optimized grid */
+  .mobile-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Mobile-friendly flex */
+  .mobile-flex {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* Full-width on mobile */
+  .mobile-full-width {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Hide on mobile */
+  .mobile-hidden {
+    display: none !important;
+  }
+
+  /* Show only on mobile */
+  .mobile-only {
+    display: block;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+/* ============================================
+   MOBILE LOADING STATES
+   ============================================ */
+
+@media (max-width: 767px) {
+  /* Simplified loading spinner */
+  .spinner {
+    width: 32px;
+    height: 32px;
+    border-width: 3px;
+  }
+
+  /* Faster skeleton animation */
+  .skeleton {
+    animation-duration: 1.2s;
+  }
+
+  /* Simplified loading messages */
+  .loading-message {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+/* ============================================
+   MOBILE SAFE AREAS (iOS notch support)
+   ============================================ */
+
+@supports (padding: max(0px)) {
+  @media (max-width: 767px) {
+    .mobile-safe-top {
+      padding-top: max(16px, env(safe-area-inset-top));
+    }
+
+    .mobile-safe-bottom {
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
+    }
+
+    .mobile-safe-left {
+      padding-left: max(16px, env(safe-area-inset-left));
+    }
+
+    .mobile-safe-right {
+      padding-right: max(16px, env(safe-area-inset-right));
+    }
+
+    .mobile-safe-all {
+      padding: max(16px, env(safe-area-inset-top)) 
+               max(16px, env(safe-area-inset-right)) 
+               max(16px, env(safe-area-inset-bottom)) 
+               max(16px, env(safe-area-inset-left));
+    }
+  }
+}
+
+
+/* ============================================
+   LOW PERFORMANCE DEVICE OPTIMIZATIONS
+   ============================================ */
+
+/* Applied when FPS drops below threshold */
+.low-performance-device * {
+  animation-duration: 0.1s !important;
+  transition-duration: 0.1s !important;
+}
+
+.low-performance-device .animate-shimmer,
+.low-performance-device .animate-pulse,
+.low-performance-device .animate-pulse-glow,
+.low-performance-device .animate-bounce,
+.low-performance-device .animate-float,
+.low-performance-device .animate-float-subtle,
+.low-performance-device .animate-gradient-shift,
+.low-performance-device .animate-glow,
+.low-performance-device .animate-heartbeat,
+.low-performance-device .animate-rotate {
+  animation: none !important;
+}
+
+.low-performance-device .skeleton {
+  animation: none !important;
+  background: var(--color-neutral-light);
+}
+
+.low-performance-device .recipe-card:hover,
+.low-performance-device .recipe-card:active {
+  transform: none !important;
+}
+
+.low-performance-device .recipe-card-image {
+  transition: none !important;
+}
+
+.low-performance-device .hover-lift:hover,
+.low-performance-device .hover-scale:hover {
+  transform: none !important;
+}
+
+/* Reduced animations for low-end devices */
+.reduced-animations-device * {
+  animation-duration: 0.05s !important;
+  transition-duration: 0.05s !important;
+}
+
+.reduced-animations-device .animate-shimmer,
+.reduced-animations-device .animate-pulse,
+.reduced-animations-device .animate-pulse-glow,
+.reduced-animations-device .animate-bounce,
+.reduced-animations-device .animate-float,
+.reduced-animations-device .animate-float-subtle,
+.reduced-animations-device .animate-gradient-shift,
+.reduced-animations-device .animate-rotate,
+.reduced-animations-device .animate-glow,
+.reduced-animations-device .animate-heartbeat {
+  animation: none !important;
+}
+
+/* ============================================
+   60FPS OPTIMIZATION UTILITIES
+   ============================================ */
+
+/* Force GPU acceleration for smooth 60fps */
+.gpu-accelerate {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+/* Optimize for 60fps animations */
+@media (max-width: 767px) {
+  /* Use transform and opacity only for animations */
+  .animate-fade-in,
+  .animate-fade-out,
+  .animate-scale-in,
+  .animate-scale-out {
+    will-change: opacity, transform;
+  }
+
+  /* Limit will-change to actively animating elements */
+  .animating {
+    will-change: transform, opacity;
+  }
+
+  .animating.complete {
+    will-change: auto;
+  }
+
+  /* Optimize reflow-heavy operations */
+  .recipe-grid,
+  .ingredient-list,
+  .filter-panel {
+    contain: layout;
+  }
+
+  /* Prevent layout thrashing */
+  .fixed-height {
+    height: auto;
+    min-height: 0;
+  }
+
+  /* Optimize scroll performance */
+  .scroll-container {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    will-change: scroll-position;
+  }
+
+  /* Debounce expensive operations */
+  .throttled-animation {
+    animation-timing-function: steps(10);
+  }
+}
