@@ -5,6 +5,9 @@ import { recipeService } from '../services/recipeService';
 import RecipeCard from '../components/RecipeCard';
 import FilterPanel from '../components/FilterPanel';
 import SkeletonCard from '../components/SkeletonCard';
+import SkeletonLoader from '../components/SkeletonLoader';
+import RecipeStatsDashboard from '../components/RecipeStatsDashboard';
+import AnimatedEmptyState from '../components/AnimatedEmptyState';
 import './RecipeResults.css';
 
 const RECIPES_PER_PAGE = 20;
@@ -142,7 +145,7 @@ const RecipeResults: React.FC = () => {
           </div>
           <div className="recipe-results-content">
             <div className="recipe-results-filters">
-              <div className="skeleton-filter-panel skeleton-shimmer"></div>
+              <SkeletonLoader variant="filter-panel" />
             </div>
             <div className="recipe-results-main">
               <div className="recipe-results-grid">
@@ -192,24 +195,20 @@ const RecipeResults: React.FC = () => {
         </div>
 
         {filteredRecipes.length === 0 ? (
-          <div className="recipe-results-empty">
-            <div className="recipe-results-empty-icon">🔍</div>
-            <h2 className="recipe-results-empty-title">No recipes found</h2>
-            <p className="recipe-results-empty-message">
-              We couldn't find any recipes matching your criteria.
-            </p>
-            <div className="recipe-results-empty-suggestions">
-              <p><strong>Try:</strong></p>
-              <ul>
-                <li>Removing some filters</li>
-                <li>Adding more ingredients</li>
-                <li>Trying different ingredient combinations</li>
-              </ul>
-            </div>
-            <button className="recipe-results-error-button" onClick={handleBackToHome}>
-              Back to Home
-            </button>
-          </div>
+          <AnimatedEmptyState
+            icon="🔍"
+            title="No recipes found"
+            message="We couldn't find any recipes matching your criteria."
+            suggestions={[
+              'Removing some filters',
+              'Adding more ingredients',
+              'Trying different ingredient combinations',
+            ]}
+            action={{
+              label: 'Back to Home',
+              onClick: handleBackToHome,
+            }}
+          />
         ) : (
           <div className="recipe-results-content">
             <div className="recipe-results-filters">
@@ -221,13 +220,20 @@ const RecipeResults: React.FC = () => {
             </div>
 
             <div className="recipe-results-main">
+              <RecipeStatsDashboard recipes={filteredRecipes} />
+              
               <div className="recipe-results-grid">
-                {paginationData.currentRecipes.map((recipe) => (
-                  <RecipeCard
+                {paginationData.currentRecipes.map((recipe, index) => (
+                  <div
                     key={recipe.id}
-                    recipe={recipe}
-                    onClick={() => handleRecipeClick(recipe.id)}
-                  />
+                    className="recipe-grid-item"
+                    style={{ animationDelay: `${index * 0.05}s` }}
+                  >
+                    <RecipeCard
+                      recipe={recipe}
+                      onClick={() => handleRecipeClick(recipe.id)}
+                    />
+                  </div>
                 ))}
               </div>
 

@@ -3,6 +3,23 @@
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: top;
+}
+
+.filter-panel:not(.collapsed) {
+  animation: slideDown 0.3s ease forwards;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .filter-panel-header {
@@ -17,6 +34,100 @@
   font-size: 1.25rem;
   font-weight: 600;
   color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Filter count badge */
+.filter-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  background: #667eea;
+  color: white;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  animation: badgePop 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes badgePop {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Active filter chips */
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: #f0f0f0;
+  border-radius: 16px;
+  font-size: 0.875rem;
+  color: #333;
+  animation: chipSlideIn 0.3s ease forwards;
+}
+
+@keyframes chipSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.filter-chip span {
+  text-transform: capitalize;
+}
+
+.filter-chip-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  background: #666;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.filter-chip-remove:hover {
+  background: #e74c3c;
+  transform: scale(1.1);
+}
+
+.filter-chip-remove:active {
+  transform: scale(0.95);
 }
 
 .filter-panel-clear {
@@ -121,6 +232,67 @@
 .filter-results-count strong {
   color: #667eea;
   font-weight: 600;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.filter-results-count strong:hover {
+  transform: scale(1.1);
+}
+
+/* Apply filters button with ripple effect */
+.filter-apply-button {
+  position: relative;
+  width: 100%;
+  padding: 12px 16px;
+  margin: 16px 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: buttonSlideUp 0.3s ease forwards;
+}
+
+@keyframes buttonSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.filter-apply-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.filter-apply-button:active {
+  transform: translateY(0);
+}
+
+/* Ripple effect */
+.filter-apply-button .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  transform: scale(0);
+  animation: rippleEffect 0.6s ease-out;
+  pointer-events: none;
+}
+
+@keyframes rippleEffect {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
 }
 
 /* Collapsible filter panel for mobile */
@@ -139,9 +311,13 @@
   text-align: left;
   transition: background-color 0.2s;
   min-height: 48px; /* Touch-friendly */
-  display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
+}
+
+.filter-panel-mobile-toggle span:first-child {
+  flex: 1;
 }
 
 .filter-panel-mobile-toggle:hover {
@@ -228,5 +404,24 @@
 
   .filter-panel-mobile-toggle {
     display: none;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .filter-panel,
+  .filter-count-badge,
+  .filter-chip,
+  .filter-apply-button {
+    animation: none;
+  }
+
+  .filter-apply-button .ripple {
+    animation: none;
+  }
+
+  .filter-chip-remove,
+  .filter-apply-button {
+    transition: none;
   }
 }
