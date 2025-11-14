@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Recipe } from '../types';
 import { userService } from '../services/userService';
 import RecipeCard from './RecipeCard';
+import AnimatedEmptyState from './AnimatedEmptyState';
 import './FavoriteRecipes.css';
 
 const FavoriteRecipes: React.FC = () => {
@@ -52,11 +53,21 @@ const FavoriteRecipes: React.FC = () => {
 
   if (recipes.length === 0) {
     return (
-      <div className="favorite-recipes-empty">
-        <div className="empty-state-icon">❤️</div>
-        <h3>No Favorite Recipes Yet</h3>
-        <p>Start exploring recipes and save your favorites to see them here!</p>
-      </div>
+      <AnimatedEmptyState
+        icon="❤️"
+        title="No Favorite Recipes Yet"
+        message="Start exploring recipes and save your favorites to see them here!"
+        suggestions={[
+          'Browse popular recipes on the homepage',
+          'Search for recipes with your ingredients',
+          'Click the heart icon on any recipe to save it'
+        ]}
+        action={{
+          label: 'Explore Recipes',
+          onClick: () => navigate('/'),
+          ariaLabel: 'Go to homepage to explore recipes'
+        }}
+      />
     );
   }
 

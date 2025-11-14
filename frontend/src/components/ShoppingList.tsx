@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ShoppingListItem } from '../types';
 import { userService } from '../services/userService';
+import AnimatedEmptyState from './AnimatedEmptyState';
 import './ShoppingList.css';
 
 const ShoppingList: React.FC = () => {
@@ -62,11 +63,16 @@ const ShoppingList: React.FC = () => {
 
   if (items.length === 0) {
     return (
-      <div className="shopping-list-empty">
-        <div className="empty-state-icon">🛒</div>
-        <h3>Your Shopping List is Empty</h3>
-        <p>Add missing ingredients from recipes to build your shopping list!</p>
-      </div>
+      <AnimatedEmptyState
+        icon="🛒"
+        title="Your Shopping List is Empty"
+        message="Add missing ingredients from recipes to build your shopping list!"
+        suggestions={[
+          'View a recipe and click "Add to Shopping List"',
+          'Missing ingredients will be automatically added',
+          'Check off items as you shop'
+        ]}
+      />
     );
   }
 
