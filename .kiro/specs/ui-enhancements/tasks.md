@@ -132,8 +132,8 @@
     - Integrate tooltips throughout the application
     - _Requirements: 9.4_
 
-- [ ] 10. Implement onboarding system
-  - [ ] 10.1 Create OnboardingHint component
+- [x] 10. Implement onboarding system
+  - [x] 10.1 Create OnboardingHint component
     - Implement spotlight effect on target elements
     - Create animated hint bubble
     - Add progress dots
@@ -141,7 +141,7 @@
     - Add local storage persistence
     - _Requirements: 9.3_
   
-  - [ ] 10.2 Add first-time user celebrations
+  - [x] 10.2 Add first-time user celebrations
     - Create celebratory animation for first actions
     - Implement milestone animations
     - _Requirements: 9.5_

@@ -30,3 +30,6 @@ export { default as RecipeStatsDashboard } from './RecipeStatsDashboard';
 export { default as AnimatedEmptyState } from './AnimatedEmptyState';
 export { default as AnimatedTooltip } from './AnimatedTooltip';
 export { default as HelpIcon } from './HelpIcon';
+export { default as OnboardingHint } from './OnboardingHint';
+export { default as CelebrationAnimation } from './CelebrationAnimation';
+export { OnboardingProvider, useOnboardingContext, CELEBRATIONS } from './OnboardingProvider';
